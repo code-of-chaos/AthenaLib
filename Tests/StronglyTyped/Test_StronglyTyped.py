@@ -65,3 +65,12 @@ class TestCase_StronglyTyped(unittest.TestCase):
             function("a",0,0)
         with self.assertRaises(StrongError):
             function(0,"a",None)
+
+    def test_Class(self):
+        class Alpha:
+            @StronglyTypedMethod
+            def Beta(self,c:str):
+                return c
+
+        a = Alpha()
+        self.assertEqual(a.Beta("d"),"d")

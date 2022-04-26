@@ -15,24 +15,25 @@ class StrongError(Exception):
     pass
 
 def StronglyTyped(fnc):
-    fncspec:inspect.FullArgSpec = inspect.getfullargspec(fnc)
-    error = lambda k,v : f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}"
+    fncspec = inspect.getfullargspec(fnc)
+    def wrapper(*args, **kwargs):
+        for k, v in zip(
+            (*fncspec.args, *kwargs),
+            (*args,*kwargs.values())
+        ):
+            if not isinstance(v, fncspec.annotations[k]):
+                raise StrongError(f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}")
+        return fnc(*args,**kwargs)
+    return wrapper
 
-    if fncspec.varargs is not None:
-        def wrapper(*args, **kwargs):
-            for k,v in {**kwargs,
-                        **dict(zip(fncspec.args, args)),
-                        **{fncspec.varargs: args[len(fncspec.args):]}
-                        }.items() :
-                if not isinstance(v, fncspec.annotations[k]):
-                    raise StrongError(error(k,v))
-            return fnc(*args,**kwargs)
-    else:
-        def wrapper(*args, **kwargs):
-            for k,v in {**kwargs,
-                        **dict(zip(fncspec.args, args))
-                        }.items():
-                if not isinstance(v, fncspec.annotations[k]):
-                    raise StrongError(error(k,v))
-            return fnc(*args, **kwargs)
+def StronglyTypedMethod(fnc):
+    fncspec = inspect.getfullargspec(fnc)
+    def wrapper(self, *args, **kwargs):
+        for k, v in zip(
+            (*(a for a in fncspec.args if a != 'self'), *kwargs),
+            (*args,*kwargs.values())
+        ):
+            if not isinstance(v, fncspec.annotations[k]):
+                raise StrongError(f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}")
+        return fnc(self, *args,**kwargs)
     return wrapper

@@ -6,11 +6,11 @@
 # Custom Library
 
 # Custom Packages
-from .StronglyTyped import StronglyTyped, StrongError
+from .StronglyTyped import StronglyTyped, StrongError, StronglyTypedMethod
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__=[
-    "StronglyTyped","StrongError"
+    "StronglyTyped","StrongError","StronglyTypedMethod"
 ]
