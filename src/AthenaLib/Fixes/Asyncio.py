@@ -11,6 +11,6 @@
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 def fix_nested_asyncio():
-    """Simple function to created nested asyncio loops"""
+    """Simple function to create nested asyncio loops"""
     import nest_asyncio
     nest_asyncio.apply()
