@@ -5,7 +5,7 @@
 import unittest
 
 # Custom Library
-from AthenaLib.Fixes import fix_nested_asyncio
+from AthenaLib.Fixes import *
 
 # Custom Packages
 
