@@ -15,16 +15,24 @@ class StrongError(Exception):
     pass
 
 def StronglyTyped(fnc):
-    def wrapper(*args, **kwargs):
-        fncspec:inspect.FullArgSpec = inspect.getfullargspec(fnc)
-        for k,v in (kwargs
-                      | {a:v for a, v in zip(fncspec.args,args)}
-                      | {fncspec.varargs:args[len(fncspec.args):]}).items():
-            try:
-                if not isinstance(v, fncspec.annotations[k]):
-                    raise StrongError(f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}")
-            except KeyError:
-                continue
+    fncspec:inspect.FullArgSpec = inspect.getfullargspec(fnc)
+    error = lambda k,v : f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}"
 
-        return fnc(*args,**kwargs)
+    if fncspec.varargs is not None:
+        def wrapper(*args, **kwargs):
+            for k,v in {**kwargs,
+                        **dict(zip(fncspec.args, args)),
+                        **{fncspec.varargs: args[len(fncspec.args):]}
+                        }.items() :
+                if not isinstance(v, fncspec.annotations[k]):
+                    raise StrongError(error(k,v))
+            return fnc(*args,**kwargs)
+    else:
+        def wrapper(*args, **kwargs):
+            for k,v in {**kwargs,
+                        **dict(zip(fncspec.args, args))
+                        }.items():
+                if not isinstance(v, fncspec.annotations[k]):
+                    raise StrongError(error(k,v))
+            return fnc(*args, **kwargs)
     return wrapper
