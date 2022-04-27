@@ -3,10 +3,13 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 import inspect
+from types import GenericAlias, UnionType
+from typing import _UnionGenericAlias,_GenericAlias
 
 # Custom Library
 
 # Custom Packages
+from AthenaLib.Fixes.SubscriptedGenerics import Fix_SubscriptedGenerics
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -20,9 +23,9 @@ __all__ = [
 # ----------------------------------------------------------------------------------------------------------------------
 _ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strongly typed: '{t}'"
 
-def _TypeChecker(CombinedInput,fncspec:inspect.FullArgSpec):
+def _TypeChecker(CombinedInput,annotations:dict):
     for k, v in CombinedInput:
-        assert isinstance(v, fncspec.annotations[k]), _ErrorMsg(v, fncspec.annotations[k])
+        assert isinstance(v, annotations[k]), _ErrorMsg(v, annotations[k])
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
@@ -38,10 +41,13 @@ def StronglyTyped(fnc):
     if fncspec.varargs is not None:
         fncspec_args.append(fncspec.varargs)
 
+    # Fix any Subscripted Generics so only the base type is checked
+    annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
+
     if fncspec.annotations and 'return' in fncspec.annotations:
         def wrapper(*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), fncspec=fncspec)
-            _TypeChecker(CombinedInput=kwargs.items(), fncspec=fncspec)
+            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
+            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
             assert isinstance(
                 result := fnc(*args, **kwargs),
                 fncspec.annotations["return"]
@@ -50,8 +56,8 @@ def StronglyTyped(fnc):
 
     elif fncspec.annotations:
         def wrapper(*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), fncspec=fncspec)
-            _TypeChecker(CombinedInput=kwargs.items(), fncspec=fncspec)
+            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
+            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
             return fnc(*args, **kwargs)
     else:
         def wrapper(*args, **kwargs):
@@ -66,10 +72,13 @@ def StronglyTypedMethod(fnc):
     if fncspec.varargs is not None:
         fncspec_args.append(fncspec.varargs)
 
+    # Fix any Subscripted Generics so only the base type is checked
+    annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
+
     if fncspec.annotations and 'return' in fncspec.annotations:
         def wrapper(self,*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), fncspec=fncspec)
-            _TypeChecker(CombinedInput=kwargs.items(), fncspec=fncspec)
+            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
+            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
             assert isinstance(
                 result := fnc(self,*args, **kwargs),
                 fncspec.annotations["return"]
@@ -77,8 +86,8 @@ def StronglyTypedMethod(fnc):
             return result
     elif fncspec.annotations:
         def wrapper(self,*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), fncspec=fncspec)
-            _TypeChecker(CombinedInput=kwargs.items(), fncspec=fncspec)
+            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
+            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
             return fnc(self,*args, **kwargs)
     else:
         def wrapper(self,*args, **kwargs):
