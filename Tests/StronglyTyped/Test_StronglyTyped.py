@@ -74,3 +74,12 @@ class TestCase_StronglyTyped(unittest.TestCase):
 
         a = Alpha()
         self.assertEqual(a.Beta("d"),"d")
+
+    def test_MultipleAnnotations(self):
+        @StronglyTyped
+        def function(a:str|int):
+            return a
+        self.assertEqual(function(1), 1)
+        self.assertEqual(function("a"), "a")
+        with self.assertRaises(StrongError):
+            function(["a"])
