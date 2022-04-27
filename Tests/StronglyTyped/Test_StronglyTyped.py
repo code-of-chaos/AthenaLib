@@ -12,7 +12,7 @@ from AthenaLib.StronglyTyped import *
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class TestCase_StronglyTyped(unittest.TestCase):
+class Test(unittest.TestCase):
     def test_SingleArg(self):
         @StronglyTyped
         def a(b:str):
@@ -59,11 +59,11 @@ class TestCase_StronglyTyped(unittest.TestCase):
         def function(a:str, b:int, c:str|None=None):
             return a,b,c
 
-        with self.assertRaises(StrongError):
+        with self.assertRaises(AssertionError):
             function("a","b","c")
-        with self.assertRaises(StrongError):
+        with self.assertRaises(AssertionError):
             function("a",0,0)
-        with self.assertRaises(StrongError):
+        with self.assertRaises(AssertionError):
             function(0,"a",None)
 
     def test_Class(self):
@@ -81,5 +81,5 @@ class TestCase_StronglyTyped(unittest.TestCase):
             return a
         self.assertEqual(function(1), 1)
         self.assertEqual(function("a"), "a")
-        with self.assertRaises(StrongError):
+        with self.assertRaises(AssertionError):
             function(["a"])
