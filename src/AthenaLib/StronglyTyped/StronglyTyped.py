@@ -15,6 +15,8 @@ class StrongError(Exception):
     pass
 
 def StronglyTyped(fnc):
+    # do the inspection before a function is esxecuted
+    #   as now it is only done once, instead of every function
     fncspec = inspect.getfullargspec(fnc)
     def wrapper(*args, **kwargs):
         for k, v in zip(
@@ -22,11 +24,13 @@ def StronglyTyped(fnc):
             (*args,*kwargs.values())
         ):
             if not isinstance(v, fncspec.annotations[k]):
-                raise StrongError(f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}")
+                raise StrongError(f"{v} was not the same type as the Strongly typed: {fncspec.annotations[k]}")
         return fnc(*args,**kwargs)
     return wrapper
 
 def StronglyTypedMethod(fnc):
+    # do the inspection before a function is esxecuted
+    #   as now it is only done once, instead of every function
     fncspec = inspect.getfullargspec(fnc)
     def wrapper(self, *args, **kwargs):
         for k, v in zip(
@@ -34,6 +38,6 @@ def StronglyTypedMethod(fnc):
             (*args,*kwargs.values())
         ):
             if not isinstance(v, fncspec.annotations[k]):
-                raise StrongError(f"{v} was not the same type as the Strictly typed: {fncspec.annotations[k]}")
+                raise StrongError(f"{v} was not the same type as the Strongly typed: {fncspec.annotations[k]}")
         return fnc(self, *args,**kwargs)
     return wrapper
