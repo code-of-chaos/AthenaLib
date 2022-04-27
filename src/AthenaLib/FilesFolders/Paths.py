@@ -7,7 +7,7 @@ import os
 # Custom Library
 
 # Custom Packages
-from AthenaLib.StronglyTyped.StronglyTyped import StronglyTyped
+from AthenaLib.StrictAnnotated.StrictAnnotated import StrictAnnotated
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
@@ -17,7 +17,7 @@ PathTypes = str | bytes | os.PathLike
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-@StronglyTyped
+@StrictAnnotated
 def PathCombine(*PathSegments:PathTypes, Cwd:bool=False) -> str:
     if Cwd:
         return os.path.join(os.getcwd(), *PathSegments)

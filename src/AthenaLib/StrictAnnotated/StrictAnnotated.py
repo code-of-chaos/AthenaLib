@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 import inspect
+from typing import Callable
 
 # Custom Library
 
@@ -13,47 +14,55 @@ from AthenaLib.Fixes.SubscriptedGenerics import Fix_SubscriptedGenerics
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__ = [
-    "StronglyTyped", "StronglyTypedMethod", "StrongError"
+    "StrictAnnotated", "StrictAnnotatedMethod", "StrictError"
 ]
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
 # ----------------------------------------------------------------------------------------------------------------------
-_ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strongly typed: '{t}'"
-
-def _TypeChecker(CombinedInput,annotations:dict):
-    for k, v in CombinedInput:
-        # noinspection PyTypeHints
-        assert isinstance(v, annotations[k]), _ErrorMsg(v, annotations[k])
-
-# ----------------------------------------------------------------------------------------------------------------------
-# - Code -
-# ----------------------------------------------------------------------------------------------------------------------
-class StrongError(Exception):
+class StrictError(TypeError):
     pass
 
-def StronglyTyped(fnc):
+_ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strongly typed: '{t}'"
+
+def _TypeChecker(CombinedInput,annotations):
+    for k, v in CombinedInput:
+        if k in annotations:
+            if not isinstance(v, annotations[k]):
+                raise StrictError(_ErrorMsg(v, annotations[k]))
+
+def _PrepFunction(fnc:Callable, method:bool=False) -> tuple[inspect.FullArgSpec,list[str], dict]:
     # do the inspection before a function is esxecuted
     #   as now it is only done once, instead of every function
-    fncspec:inspect.FullArgSpec = inspect.getfullargspec(fnc)
-    fncspec_args = fncspec.args
+    fncspec: inspect.FullArgSpec = inspect.getfullargspec(fnc)
+    if method:
+        fncspec_args = [a for a in fncspec.args if a != 'self']
+    else:
+        fncspec_args = fncspec.args
+
     if fncspec.varargs is not None:
         fncspec_args.append(fncspec.varargs)
 
     # Fix any Subscripted Generics so only the base type is checked
     annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
 
-    if fncspec.annotations and 'return' in fncspec.annotations:
-        return_type = annotations["return"]
+    return fncspec,fncspec_args, annotations
 
+# ----------------------------------------------------------------------------------------------------------------------
+# - Code -
+# ----------------------------------------------------------------------------------------------------------------------
+def StrictAnnotated(fnc):
+    # Prepare and extract all information from function
+    fncspec,fncspec_args,annotations = _PrepFunction(fnc)
+
+    if fncspec.annotations and 'return' in fncspec.annotations:
         def wrapper(*args, **kwargs):
             _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
             _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
+
             # noinspection PyTypeHints
-            assert isinstance(
-                result := fnc(*args, **kwargs),
-                return_type
-            ), _ErrorMsg(result, fncspec.annotations["return"])
+            if not isinstance(result := fnc(*args, **kwargs),annotations["return"]):
+                raise StrictError(_ErrorMsg(result, fncspec.annotations["return"]))
             return result
 
     elif fncspec.annotations:
@@ -64,30 +73,20 @@ def StronglyTyped(fnc):
     else:
         def wrapper(*args, **kwargs):
             return fnc(*args, **kwargs)
+
     return wrapper
 
-def StronglyTypedMethod(fnc):
-    # do the inspection before a function is esxecuted
-    #   as now it is only done once, instead of every function
-    fncspec: inspect.FullArgSpec = inspect.getfullargspec(fnc)
-    fncspec_args = [a for a in fncspec.args if a != 'self']
-    if fncspec.varargs is not None:
-        fncspec_args.append(fncspec.varargs)
-
-    # Fix any Subscripted Generics so only the base type is checked
-    annotations: dict[str:type] = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
+def StrictAnnotatedMethod(fnc):
+    # Prepare and extract all information from method
+    fncspec,fncspec_args,annotations = _PrepFunction(fnc)
 
     if fncspec.annotations and 'return' in fncspec.annotations:
-        return_type =annotations["return"]
-
         def wrapper(self,*args, **kwargs):
             _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
             _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
             # noinspection PyTypeHints
-            assert isinstance(
-                result := fnc(self,*args, **kwargs),
-                return_type
-            ), _ErrorMsg(result,fncspec.annotations["return"])
+            if not isinstance(result := fnc(self,*args, **kwargs),annotations["return"]):
+                raise StrictError(_ErrorMsg(result, fncspec.annotations["return"]))
             return result
 
     elif fncspec.annotations:
@@ -98,4 +97,5 @@ def StronglyTypedMethod(fnc):
     else:
         def wrapper(self,*args, **kwargs):
             return fnc(self,*args, **kwargs)
+
     return wrapper
