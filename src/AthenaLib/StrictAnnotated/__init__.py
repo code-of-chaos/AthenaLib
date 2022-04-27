@@ -7,12 +7,12 @@
 
 # Custom Packages
 from .StrictAnnotated import StrictAnnotated, StrictError, StrictAnnotatedMethod
-from .StrictAnnotated_Full import StrictAnnotated_Full, StrictAnnotatedMethod_Full
+# from .StrictAnnotated_Full import StrictAnnotated_Full, StrictAnnotatedMethod_Full # TODO
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__=[
     "StrictAnnotated", "StrictError", "StrictAnnotatedMethod",
-    "StrictAnnotated_Full","StrictAnnotatedMethod_Full"
+    # "StrictAnnotated_Full","StrictAnnotatedMethod_Full", # TODO
 ]

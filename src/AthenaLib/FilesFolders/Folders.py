@@ -53,7 +53,7 @@ def FolderContent_Files_Extension(folder_path:PathTypes, extension:str|Iterable[
     )])
 
 @StrictAnnotated
-def FolderMove(folder_path_start:PathTypes,folder_path_end:PathTypes, fatal:bool=True):
+def FolderMove(folder_path_start:PathTypes,folder_path_end:PathTypes, fatal:bool=True) -> None:
     FolderExist(folder_path_start, fatal)
     FolderExistNot(folder_path_end, fatal)
 
