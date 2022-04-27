@@ -2,19 +2,19 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-import unittest
+import os
 
 # Custom Library
-from AthenaLib.Fixes import *
 
 # Custom Packages
+from AthenaLib.StronglyTyped.StronglyTyped import StronglyTyped
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-    def test_nested_asyncio(self):
-        try:
-            fix_nested_asyncio()
-        except ImportError:
-            self.fail("test_nested_asyncio couldn't import the nessary module to fix the issue")
+@StronglyTyped
+def PathCombine(*PathSegments:str, Cwd:bool=False) -> str:
+    if Cwd:
+        return os.path.join(os.getcwd(), *PathSegments)
+    else:
+        return os.path.join(*PathSegments)
