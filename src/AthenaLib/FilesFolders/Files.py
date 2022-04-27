@@ -2,19 +2,25 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-# noinspection PyProtectedMember
-from typing import _UnionGenericAlias,_GenericAlias
+import os
 
 # Custom Library
 
 # Custom Packages
+from AthenaLib.StronglyTyped.StronglyTyped import StronglyTyped
+from .Paths import PathTypes
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def Fix_SubscriptedGenerics(annotation) -> type:
-    if isinstance(annotation, _UnionGenericAlias):
-        for a in annotation.__args__:
-            if isinstance(a, _GenericAlias):
-                return a.__origin__
-    return annotation
+@StronglyTyped
+def FileExist(file_path:PathTypes, fatal:bool=False) -> bool:
+    if not (exsists:=os.path.isfile(file_path)) and fatal:
+        raise FileNotFoundError
+    return exsists
+
+@StronglyTyped
+def FileExistNot(file_path:PathTypes, fatal:bool=False) -> bool:
+    if (exsists:=os.path.isfile(file_path)) and fatal:
+        raise FileExistsError
+    return not exsists

@@ -9,7 +9,8 @@ import os
 
 # Custom Packages
 from AthenaLib.FilesFolders.Folders import (
-    FolderContent_All,FolderContent_Folders,FolderContent_Files, FolderExsist,FolderContent_Files_Extension
+    FolderContent_All, FolderContent_Folders, FolderContent_Files, FolderExist, FolderContent_Files_Extension,
+    FolderExistNot
 )
 
 
@@ -40,10 +41,16 @@ class Test(unittest.TestCase):
         self.assertEqual(FolderContent_Files("Data", fullpaths=True), {f'{os.getcwd()}\\Data\\test.txt'})
 
     def test_FolderExsists(self):
-        self.assertFalse(FolderExsist("DoesNotExsist"))
-        self.assertTrue(FolderExsist("Data"))
+        self.assertFalse(FolderExist("DoesNotExsist"))
+        self.assertTrue(FolderExist("Data"))
         with self.assertRaises(FileNotFoundError):
-            self.assertFalse(FolderExsist("DoesNotExsist", fatal=True))
+            self.assertFalse(FolderExist("DoesNotExsist", fatal=True))
+
+    def test_FolderExsistsNot(self):
+        self.assertFalse(FolderExistNot("Data"))
+        self.assertTrue(FolderExistNot("DoesNotExsist"))
+        with self.assertRaises(FileExistsError):
+            self.assertFalse(FolderExistNot("Data", fatal=True))
 
     def test_FolderContentFiles_Extensions(self):
         self.assertEqual(

@@ -10,10 +10,15 @@ import os
 from AthenaLib.StronglyTyped.StronglyTyped import StronglyTyped
 
 # ----------------------------------------------------------------------------------------------------------------------
+# - Support Code -
+# ----------------------------------------------------------------------------------------------------------------------
+PathTypes = str | bytes | os.PathLike
+
+# ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @StronglyTyped
-def PathCombine(*PathSegments:str, Cwd:bool=False) -> str:
+def PathCombine(*PathSegments:PathTypes, Cwd:bool=False) -> str:
     if Cwd:
         return os.path.join(os.getcwd(), *PathSegments)
     else:

@@ -3,8 +3,6 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 import inspect
-from types import GenericAlias, UnionType
-from typing import _UnionGenericAlias,_GenericAlias
 
 # Custom Library
 
@@ -25,6 +23,7 @@ _ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strong
 
 def _TypeChecker(CombinedInput,annotations:dict):
     for k, v in CombinedInput:
+        # noinspection PyTypeHints
         assert isinstance(v, annotations[k]), _ErrorMsg(v, annotations[k])
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -45,12 +44,15 @@ def StronglyTyped(fnc):
     annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
 
     if fncspec.annotations and 'return' in fncspec.annotations:
+        return_type = annotations["return"]
+
         def wrapper(*args, **kwargs):
             _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
             _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
+            # noinspection PyTypeHints
             assert isinstance(
                 result := fnc(*args, **kwargs),
-                fncspec.annotations["return"]
+                return_type
             ), _ErrorMsg(result, fncspec.annotations["return"])
             return result
 
@@ -73,17 +75,21 @@ def StronglyTypedMethod(fnc):
         fncspec_args.append(fncspec.varargs)
 
     # Fix any Subscripted Generics so only the base type is checked
-    annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
+    annotations: dict[str:type] = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
 
     if fncspec.annotations and 'return' in fncspec.annotations:
+        return_type =annotations["return"]
+
         def wrapper(self,*args, **kwargs):
             _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
             _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
+            # noinspection PyTypeHints
             assert isinstance(
                 result := fnc(self,*args, **kwargs),
-                fncspec.annotations["return"]
+                return_type
             ), _ErrorMsg(result,fncspec.annotations["return"])
             return result
+
     elif fncspec.annotations:
         def wrapper(self,*args, **kwargs):
             _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
