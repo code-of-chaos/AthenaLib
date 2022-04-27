@@ -8,7 +8,7 @@ from typing import Callable
 # Custom Library
 
 # Custom Packages
-from AthenaLib.Fixes.SubscriptedGenerics import Fix_SubscriptedGenerics
+from AthenaLib.Fixes.SubscriptedGeneric import fix_SubscriptedGeneric, fix_SubscriptedGeneric_Full
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -44,9 +44,7 @@ def _PrepFunction(fnc:Callable, method:bool=False) -> tuple[inspect.FullArgSpec,
         fncspec_args.append(fncspec.varargs)
 
     # Fix any Subscripted Generics so only the base type is checked
-    annotations = {k:Fix_SubscriptedGenerics(v) for k,v in fncspec.annotations.items()}
-
-    return fncspec,fncspec_args, annotations
+    return fncspec,fncspec_args, fix_SubscriptedGeneric_Full(fncspec.annotations)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
