@@ -2,23 +2,26 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
+import asyncio
 
 # Custom Library
 
 # Custom Packages
-from .Paths import PathTypes, path_combine
-from .Files import file_exists, file_existsNot
-from .Folders import (
-    folder_move, folder_content_folders, folder_content, folder_content_files, folder_exists, folder_existsNot,
-    folder_content_files_extensions
-)
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - All -
+# - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-__all__=[
-    PathTypes, path_combine,
-    file_exists, file_existsNot,
-    folder_move,folder_content_folders,folder_content,folder_content_files,folder_exists,folder_existsNot,
-    folder_content_files_extensions,
-]
+def Timeout(max_time:int|float):
+    def decorator(fnc):
+        def wrapper(*args, **kwargs):
+            try:
+                return asyncio.run(
+                    asyncio.wait_for(
+                        fnc(*args, **kwargs),
+                        timeout=max_time
+                    )
+                )
+            except asyncio.exceptions.TimeoutError:
+                raise TimeoutError
+        return wrapper
+    return decorator

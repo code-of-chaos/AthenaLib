@@ -9,8 +9,8 @@ import os
 
 # Custom Packages
 from AthenaLib.FilesFolders.Folders import (
-    FolderContent_All, FolderContent_Folders, FolderContent_Files, FolderExist, FolderContent_Files_Extension,
-    FolderExistNot
+    folder_content, folder_content_folders, folder_content_files, folder_exists, folder_content_files_extensions,
+    folder_existsNot, folder_content_walk, folder_move
 )
 
 
@@ -18,54 +18,60 @@ from AthenaLib.FilesFolders.Folders import (
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 class Test(unittest.TestCase):
-    def test_FolderContentAll(self):
-        self.assertEqual(FolderContent_All("Data"), {"Data\\test", "Data\\test.txt"})
+    def test_FolderContent(self):
+        self.assertEqual(folder_content("Data"), {"Data\\test", "Data\\test.txt"})
 
-    def test_FolderContentAll_Fullpaths(self):
+    def test_FolderContent_Fullpaths(self):
         self.assertEqual(
-            FolderContent_All("Data", fullpaths=True),
+            folder_content("Data", fullpaths=True),
             {f'{os.getcwd()}\\Data\\test',
              f'{os.getcwd()}\\Data\\test.txt'}
         )
 
     def test_FolderContentFolders(self):
-        self.assertEqual(FolderContent_Folders("Data"), {"Data\\test"})
+        self.assertEqual(folder_content_folders("Data"), {"Data\\test"})
 
     def test_FolderContentFolders_Fullpaths(self):
-        self.assertEqual(FolderContent_Folders("Data", fullpaths=True), {f'{os.getcwd()}\\Data\\test'})
+        self.assertEqual(folder_content_folders("Data", fullpaths=True), {f'{os.getcwd()}\\Data\\test'})
 
     def test_FolderContentFiles(self):
-        self.assertEqual(FolderContent_Files("Data"), {"Data\\test.txt"})
+        self.assertEqual(folder_content_files("Data"), {"Data\\test.txt"})
 
     def test_FolderContentFiles_Fullpaths(self):
-        self.assertEqual(FolderContent_Files("Data", fullpaths=True), {f'{os.getcwd()}\\Data\\test.txt'})
+        self.assertEqual(folder_content_files("Data", fullpaths=True), {f'{os.getcwd()}\\Data\\test.txt'})
 
     def test_FolderExsists(self):
-        self.assertFalse(FolderExist("DoesNotExsist"))
-        self.assertTrue(FolderExist("Data"))
+        self.assertFalse(folder_exists("DoesNotExsist"))
+        self.assertTrue(folder_exists("Data"))
         with self.assertRaises(FileNotFoundError):
-            self.assertFalse(FolderExist("DoesNotExsist", fatal=True))
+            self.assertFalse(folder_exists("DoesNotExsist", fatal=True))
 
     def test_FolderExsistsNot(self):
-        self.assertFalse(FolderExistNot("Data"))
-        self.assertTrue(FolderExistNot("DoesNotExsist"))
+        self.assertFalse(folder_existsNot("Data"))
+        self.assertTrue(folder_existsNot("DoesNotExsist"))
         with self.assertRaises(FileExistsError):
-            self.assertFalse(FolderExistNot("Data", fatal=True))
+            self.assertFalse(folder_existsNot("Data", fatal=True))
 
     def test_FolderContentFiles_Extensions(self):
         self.assertEqual(
-            FolderContent_Files_Extension("Data", extension=['.txt']),
-            {'Data\\test.txt'}
+            folder_content_files_extensions("Data", extension=['.txt']),
+            {r'Data\test.txt'}
         )
         self.assertEqual(
-            FolderContent_Files_Extension("Data", extension='.txt'),
-            {'Data\\test.txt'}
+            folder_content_files_extensions("Data", extension='.txt'),
+            {r'Data\test.txt'}
         )
         self.assertEqual(
-            FolderContent_Files_Extension("Data", fullpaths=True, extension=['.txt']),
-            {f'{os.getcwd()}\\Data\\test.txt'}
+            folder_content_files_extensions("Data", extension=['.txt'], fullpaths=True),
+            {fr'{os.getcwd()}\Data\test.txt'}
         )
         self.assertEqual(
-            FolderContent_Files_Extension("Data", fullpaths=True, extension='.txt'),
-            {f'{os.getcwd()}\\Data\\test.txt'}
+            folder_content_files_extensions("Data", extension='.txt', fullpaths=True),
+            {fr'{os.getcwd()}\Data\test.txt'}
+        )
+
+    def test_FolderContentWalk(self):
+        self.assertSetEqual(
+            folder_content_walk("Data"),
+            {r"Data\test.txt"}
         )

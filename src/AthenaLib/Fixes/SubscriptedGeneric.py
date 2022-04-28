@@ -21,7 +21,7 @@ SubscriptedGenericTypes = _UnionGenericAlias | GenericAlias | _GenericAlias | Un
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def fix_SubscriptedGeneric(annotation) -> type:
+def fix_SubscriptedGeneric(annotation:type|SubscriptedGenericTypes) -> type:
     if isinstance(annotation, _UnionGenericAlias):
         for a in annotation.__args__:
             if isinstance(a, GenericAlias|_GenericAlias):

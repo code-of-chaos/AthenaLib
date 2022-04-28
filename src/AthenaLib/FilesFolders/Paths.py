@@ -18,7 +18,7 @@ PathTypes = str | bytes | os.PathLike
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @StrictAnnotated
-def PathCombine(*PathSegments:PathTypes, Cwd:bool=False) -> str:
+def path_combine(*PathSegments:PathTypes, Cwd:bool=False) -> str:
     if Cwd:
         return os.path.join(os.getcwd(), *PathSegments)
     else:

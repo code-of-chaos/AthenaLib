@@ -7,20 +7,20 @@ import unittest
 # Custom Library
 
 # Custom Packages
-from AthenaLib.FilesFolders.Files import FileExist, FileExistNot
+from AthenaLib.FilesFolders.Files import file_exists, file_existsNot
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 class Test(unittest.TestCase):
     def test_FileExsists(self):
-        self.assertTrue(FileExist("Data/test.txt"))
-        self.assertFalse(FileExist("Data/NotPresent.txt"))
+        self.assertTrue(file_exists("Data/test.txt"))
+        self.assertFalse(file_exists("Data/NotPresent.txt"))
         with self.assertRaises(FileNotFoundError):
-            FileExist("Data/NotPresent.txt", fatal=True)
+            file_exists("Data/NotPresent.txt", fatal=True)
 
     def test_FileExsistsNot(self):
-        self.assertTrue(FileExistNot("Data/NotPresent.txt"))
-        self.assertFalse(FileExistNot("Data/test.txt"))
+        self.assertTrue(file_existsNot("Data/NotPresent.txt"))
+        self.assertFalse(file_existsNot("Data/test.txt"))
         with self.assertRaises(FileExistsError):
-            FileExistNot("Data/test.txt", fatal=True)
+            file_existsNot("Data/test.txt", fatal=True)
