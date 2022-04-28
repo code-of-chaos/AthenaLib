@@ -3,7 +3,7 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 import inspect
-from typing import Callable
+from typing import Callable,get_type_hints
 
 # Custom Library
 
@@ -44,7 +44,7 @@ def _PrepFunction(fnc:Callable, method:bool=False) -> tuple[inspect.FullArgSpec,
         fncspec_args.append(fncspec.varargs)
 
     # Fix any Subscripted Generics so only the base type is checked
-    return fncspec,fncspec_args, fix_SubscriptedGeneric_Full(fncspec.annotations)
+    return fncspec,fncspec_args, fix_SubscriptedGeneric_Full(get_type_hints(fnc))
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
