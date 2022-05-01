@@ -9,7 +9,7 @@ import itertools
 # Custom Library
 
 # Custom Packages
-from AthenaLib.StrictAnnotated import StrictAnnotated
+from AthenaLib.StrictAnnotated.StrictAnnotated import StrictAnnotated
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -

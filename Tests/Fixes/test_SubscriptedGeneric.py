@@ -5,7 +5,7 @@
 import unittest
 
 # Custom Library
-from AthenaLib.Fixes import fix_SubscriptedGeneric, fix_SubscriptedGeneric_Full
+from AthenaLib.Fixes.SubscriptedGeneric import fix_SubscriptedGeneric, fix_SubscriptedGeneric_Full
 
 # Custom Packages
 

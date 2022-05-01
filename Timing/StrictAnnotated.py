@@ -2,15 +2,16 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-import unittest
+import timeit
+import profile
 
 # Custom Library
-from AthenaLib.StrictAnnotated.StrictAnnotated import *
+from AthenaLib.StrictAnnotated.StrictAnnotated import StrictAnnotated
 
 # Custom Packages
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - Support Code -
+# - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @StrictAnnotated
 def AnnotatedTest_1(a:str):
@@ -28,17 +29,29 @@ def AnnotatedTest_3(a:str, b:str):
 def AnnotatedTest_4(a:str, b:str) -> tuple[str,str]:
     return a,b
 
+@StrictAnnotated
+def AnnotatedTest_5(a:str, b:str,c):
+    return a,b,c
+
+@StrictAnnotated
+def AnnotatedTest_6(a, b, c):
+    return a,b,c
+
+@StrictAnnotated
+def AnnotatedTest_7(a:str, b:str, c:str, d:str, e:str, f:str, g:str) -> tuple[str,str,str,str,str,str,str]:
+    return a,b,c,d,e,f,g
+
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - Code -
+# - Testing -
 # ----------------------------------------------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-    def test_Fail(self):
-        with self.assertRaises(StrictError):
-            AnnotatedTest_1(1)
-        with self.assertRaises(StrictError):
-            AnnotatedTest_2(1)
-        with self.assertRaises(StrictError):
-            AnnotatedTest_3(1,1)
-        with self.assertRaises(StrictError):
-            AnnotatedTest_4(1,1)
+if __name__ == '__main__':
+    print(f"AnnotatedTest_1: {timeit.repeat(lambda: AnnotatedTest_1('a'))}")
+    print(f"AnnotatedTest_2: {timeit.repeat(lambda: AnnotatedTest_2('a'))}")
+    print(f"AnnotatedTest_3: {timeit.repeat(lambda: AnnotatedTest_3('a','b'))}")
+    print(f"AnnotatedTest_4: {timeit.repeat(lambda: AnnotatedTest_4('a','b'))}")
+    print(f"AnnotatedTest_5: {timeit.repeat(lambda: AnnotatedTest_5('a','b','c'))}")
+    print(f"AnnotatedTest_6: {timeit.repeat(lambda: AnnotatedTest_6('a','b','c'))}")
+    print(f"AnnotatedTest_7: {timeit.repeat(lambda: AnnotatedTest_7('a','b','c','d','e','f','g'))}")
+
+    # profile.run("AnnotatedTest_1('a')")

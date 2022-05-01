@@ -2,13 +2,15 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
+from __future__ import annotations
 import inspect
+import itertools
 from typing import Callable,get_type_hints
 
 # Custom Library
 
 # Custom Packages
-from AthenaLib.Fixes.SubscriptedGeneric import fix_SubscriptedGeneric, fix_SubscriptedGeneric_Full
+from AthenaLib.Fixes.SubscriptedGeneric import fix_SubscriptedGeneric_Full
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -27,47 +29,53 @@ _ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strong
 
 def _TypeChecker(CombinedInput,annotations):
     for k, v in CombinedInput:
-        if k in annotations:
+        try:
             if not isinstance(v, annotations[k]):
                 raise StrictError(_ErrorMsg(v, annotations[k]))
+        except KeyError:
+            continue
 
-def _PrepFunction(fnc:Callable, method:bool=False) -> tuple[inspect.FullArgSpec,list[str], dict]:
+def _PrepFunction(fnc:Callable) -> tuple[inspect.FullArgSpec,list[str], dict]:
     # do the inspection before a function is esxecuted
     #   as now it is only done once, instead of every function
     fncspec: inspect.FullArgSpec = inspect.getfullargspec(fnc)
-    if method:
-        fncspec_args = [a for a in fncspec.args if a != 'self']
-    else:
-        fncspec_args = fncspec.args
+    fncspec_args = [a for a in fncspec.args if a != 'self']
 
     if fncspec.varargs is not None:
         fncspec_args.append(fncspec.varargs)
 
     # Fix any Subscripted Generics so only the base type is checked
-    return fncspec,fncspec_args, fix_SubscriptedGeneric_Full(get_type_hints(fnc))
+    annotation = fix_SubscriptedGeneric_Full(get_type_hints(fnc))
+    for a in fncspec.args:
+        if a not in annotation:
+            annotation[a] = object
+
+    return fncspec,fncspec_args, annotation
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 def StrictAnnotated(fnc):
     # Prepare and extract all information from function
-    fncspec,fncspec_args,annotations = _PrepFunction(fnc)
+    fncspec,fncspec_args,annotation = _PrepFunction(fnc)
 
-    if fncspec.annotations and 'return' in fncspec.annotations:
+    if fncspec.annotations and "return" not in annotation:
         def wrapper(*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
-            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
-
-            # noinspection PyTypeHints
-            if not isinstance(result := fnc(*args, **kwargs),annotations["return"]):
-                raise StrictError(_ErrorMsg(result, fncspec.annotations["return"]))
-            return result
+            for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
+                if not isinstance(v, annotation[k]):
+                    raise StrictError
+            return fnc(*args, **kwargs)
 
     elif fncspec.annotations:
         def wrapper(*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
-            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
-            return fnc(*args, **kwargs)
+            for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
+                if not isinstance(v, annotation[k]):
+                    raise StrictError
+                
+            if not isinstance(result:=fnc(*args, **kwargs), annotation["return"]):
+                raise StrictError
+            return result
+
     else:
         def wrapper(*args, **kwargs):
             return fnc(*args, **kwargs)
@@ -75,23 +83,32 @@ def StrictAnnotated(fnc):
     return wrapper
 
 def StrictAnnotatedMethod(fnc):
-    # Prepare and extract all information from method
-    fncspec,fncspec_args,annotations = _PrepFunction(fnc)
+    # Prepare and extract all information from function
+    fncspec, fncspec_args, annotation = _PrepFunction(fnc)
 
-    if fncspec.annotations and 'return' in fncspec.annotations:
+    if fncspec.annotations and "return" not in annotation:
         def wrapper(self,*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
-            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
-            # noinspection PyTypeHints
-            if not isinstance(result := fnc(self,*args, **kwargs),annotations["return"]):
-                raise StrictError(_ErrorMsg(result, fncspec.annotations["return"]))
-            return result
+            try:
+                for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
+                    if not isinstance(v, annotation[k]):
+                        raise StrictError
+            except KeyError:
+                pass
+            return fnc(self,*args, **kwargs)
 
     elif fncspec.annotations:
         def wrapper(self,*args, **kwargs):
-            _TypeChecker(CombinedInput=zip(fncspec_args, args), annotations=annotations)
-            _TypeChecker(CombinedInput=kwargs.items(), annotations=annotations)
-            return fnc(self,*args, **kwargs)
+            try:
+                for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
+                    if not isinstance(v, annotation[k]):
+                        raise StrictError
+            except KeyError:
+                pass
+
+            if not isinstance(result := fnc(self,*args, **kwargs), annotation["return"]):
+                raise StrictError
+            return result
+
     else:
         def wrapper(self,*args, **kwargs):
             return fnc(self,*args, **kwargs)

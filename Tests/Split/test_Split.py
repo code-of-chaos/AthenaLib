@@ -8,7 +8,7 @@ import unittest
 
 # Custom Packages
 from AthenaLib.Split.Split import split_evenly, SplitError
-from AthenaLib.StrictAnnotated import StrictError
+from AthenaLib.StrictAnnotated.StrictAnnotated import StrictError
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------

@@ -15,7 +15,6 @@ from types import UnionType
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
 # ----------------------------------------------------------------------------------------------------------------------
-
 SubscriptedGenericTypes = _UnionGenericAlias | GenericAlias | _GenericAlias | UnionType
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -35,11 +34,14 @@ def fix_SubscriptedGeneric(annotation:type|SubscriptedGenericTypes) -> type:
 
     return annotation
 
-def fix_SubscriptedGeneric_Full(Iter:Iterable|dict) -> Iterable|dict:
-    if isinstance(Iter, type):
-        raise ValueError("A type cannot be in itself multi stripped")
-    elif isinstance(Iter, dict):
-        content = [(k, (fix_SubscriptedGeneric(v) if isinstance(v, SubscriptedGenericTypes) else v)) for k,v in Iter.items()]
-    else:
-        content = [fix_SubscriptedGeneric(i) if isinstance(i, SubscriptedGenericTypes) else i for i in Iter]
-    return type(Iter)(content)
+def fix_SubscriptedGeneric_Full(Iter):
+    if isinstance(Iter, dict):
+        return type(Iter)([
+            (k, (fix_SubscriptedGeneric(v) if isinstance(v, SubscriptedGenericTypes) else v))
+            for k,v in Iter.items()
+        ])
+
+    return type(Iter)([
+        fix_SubscriptedGeneric(i) if isinstance(i, SubscriptedGenericTypes) else i
+        for i in Iter
+    ])
