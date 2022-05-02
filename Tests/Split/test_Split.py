@@ -8,7 +8,6 @@ import unittest
 
 # Custom Packages
 from AthenaLib.Split.Split import split_evenly, SplitError
-from AthenaLib.StrictAnnotated.StrictAnnotated import StrictError
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
@@ -103,6 +102,3 @@ class Test(unittest.TestCase):
 
         with self.assertRaises(SplitError):
             split_evenly({*range(1)}, segments=2)
-
-        with self.assertRaises(StrictError):
-            split_evenly(123456789, segments=2)

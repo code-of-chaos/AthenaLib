@@ -9,7 +9,6 @@ import itertools
 # Custom Library
 
 # Custom Packages
-from AthenaLib.StrictAnnotated.StrictAnnotated import StrictAnnotated
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
@@ -21,11 +20,9 @@ _ErrorMsg= lambda content, segments: f"{content} was smaller than the given {seg
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-@StrictAnnotated
 def split_evenly(content:Iterable, segments:int) -> tuple:
     return *split_evenly_generator(content,segments),
 
-@StrictAnnotated
 def split_evenly_generator(content:Iterable, segments:int):
     match content:
         case (list(a) | set(a) | tuple(a)) if (content_len:=len(a)) >= segments:
