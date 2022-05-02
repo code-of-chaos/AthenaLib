@@ -25,17 +25,7 @@ __all__ = [
 class StrictError(TypeError):
     pass
 
-_ErrorMsg= lambda val, t: f"'{val}' was not the same type as the expected Strongly typed: '{t}'"
-
-def _TypeChecker(CombinedInput,annotations):
-    for k, v in CombinedInput:
-        try:
-            if not isinstance(v, annotations[k]):
-                raise StrictError(_ErrorMsg(v, annotations[k]))
-        except KeyError:
-            continue
-
-def _PrepFunction(fnc:Callable) -> tuple[inspect.FullArgSpec,list[str], dict]:
+def _PrepFunction(fnc:Callable) -> tuple[inspect.FullArgSpec,list[str], dict,int]:
     # do the inspection before a function is esxecuted
     #   as now it is only done once, instead of every function
     fncspec: inspect.FullArgSpec = inspect.getfullargspec(fnc)
@@ -50,28 +40,40 @@ def _PrepFunction(fnc:Callable) -> tuple[inspect.FullArgSpec,list[str], dict]:
         if a not in annotation:
             annotation[a] = object
 
-    return fncspec,fncspec_args, annotation
+    return fncspec,fncspec_args, annotation,len(fncspec_args)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 def StrictAnnotated(fnc):
     # Prepare and extract all information from function
-    fncspec,fncspec_args,annotation = _PrepFunction(fnc)
+    fncspec,fncspec_args,annotation,len_fncspec_args = _PrepFunction(fnc)
 
-    if fncspec.annotations and "return" not in annotation:
+    if list(fncspec.annotations.keys()) == ['return']:
         def wrapper(*args, **kwargs):
-            for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
-                if not isinstance(v, annotation[k]):
+            if not isinstance(result := fnc(*args, **kwargs), annotation["return"]):
+                raise StrictError
+            return result
+
+    elif fncspec.annotations and "return" not in annotation:
+        def wrapper(*args, **kwargs):
+            for i in range(len_fncspec_args):
+                if not isinstance(args[i], annotation[fncspec_args[i]]):
+                    raise StrictError
+            for k in kwargs:
+                if not isinstance(kwargs[k], annotation[k]):
                     raise StrictError
             return fnc(*args, **kwargs)
 
     elif fncspec.annotations:
         def wrapper(*args, **kwargs):
-            for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
-                if not isinstance(v, annotation[k]):
+            for i in range(len_fncspec_args):
+                if not isinstance(args[i], annotation[fncspec_args[i]]):
                     raise StrictError
-                
+            for k in kwargs:
+                if not isinstance(kwargs[k], annotation[k]):
+                    raise StrictError
+
             if not isinstance(result:=fnc(*args, **kwargs), annotation["return"]):
                 raise StrictError
             return result
@@ -84,28 +86,34 @@ def StrictAnnotated(fnc):
 
 def StrictAnnotatedMethod(fnc):
     # Prepare and extract all information from function
-    fncspec, fncspec_args, annotation = _PrepFunction(fnc)
+    fncspec,fncspec_args,annotation,len_fncspec_args = _PrepFunction(fnc)
 
-    if fncspec.annotations and "return" not in annotation:
+    if list(fncspec.annotations.keys()) == ['return']:
         def wrapper(self,*args, **kwargs):
-            try:
-                for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
-                    if not isinstance(v, annotation[k]):
-                        raise StrictError
-            except KeyError:
-                pass
+            if not isinstance(result := fnc(self,*args, **kwargs), annotation["return"]):
+                raise StrictError
+            return result
+
+    elif fncspec.annotations and "return" not in annotation:
+        def wrapper(self,*args, **kwargs):
+            for i in range(len_fncspec_args):
+                if not isinstance(args[i], annotation[fncspec_args[i]]):
+                    raise StrictError
+            for k in kwargs:
+                if not isinstance(kwargs[k], annotation[k]):
+                    raise StrictError
             return fnc(self,*args, **kwargs)
 
     elif fncspec.annotations:
         def wrapper(self,*args, **kwargs):
-            try:
-                for (k, v) in itertools.chain(kwargs.items(), zip(fncspec_args, args)):
-                    if not isinstance(v, annotation[k]):
-                        raise StrictError
-            except KeyError:
-                pass
+            for i in range(len_fncspec_args):
+                if not isinstance(args[i], annotation[fncspec_args[i]]):
+                    raise StrictError
+            for k in kwargs:
+                if not isinstance(kwargs[k], annotation[k]):
+                    raise StrictError
 
-            if not isinstance(result := fnc(self,*args, **kwargs), annotation["return"]):
+            if not isinstance(result:=fnc(self,*args, **kwargs), annotation["return"]):
                 raise StrictError
             return result
 

@@ -42,6 +42,10 @@ def AnnotatedTest_7(a:str, b:str, c:str, d:str, e:str, f:str, g:str) -> tuple[st
     return a,b,c,d,e,f,g
 
 
+@StrictAnnotated
+def AnnotatedTest_8(a) -> str:
+    return a
+
 # ----------------------------------------------------------------------------------------------------------------------
 # - Testing -
 # ----------------------------------------------------------------------------------------------------------------------
@@ -53,5 +57,6 @@ if __name__ == '__main__':
     print(f"AnnotatedTest_5: {timeit.repeat(lambda: AnnotatedTest_5('a','b','c'))}")
     print(f"AnnotatedTest_6: {timeit.repeat(lambda: AnnotatedTest_6('a','b','c'))}")
     print(f"AnnotatedTest_7: {timeit.repeat(lambda: AnnotatedTest_7('a','b','c','d','e','f','g'))}")
+    print(f"AnnotatedTest_8: {timeit.repeat(lambda: AnnotatedTest_8('a'))}")
 
     # profile.run("AnnotatedTest_1('a')")
