@@ -43,16 +43,16 @@ def dunder_func(func:Callable,left,right:CubicBezier|int|float|tuple):
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
 class CubicBezier(ValueType):
-    x1:float
-    y1:float
-    x2:float
-    y2:float
+    _x1:float
+    _y1:float
+    _x2:float
+    _y2:float
 
     def __init__(self, x1:float,y1:float,x2:float,y2:float):
         self.x1, self.y1, self.x2, self.y2 = x1,y1,x2,y2
 
     @property
-    def x1(self):
+    def x1(self) -> float:
         return self._x1
     @x1.setter
     def x1(self, value):
@@ -61,16 +61,7 @@ class CubicBezier(ValueType):
         self._x1 = max(min(value, 1.0),0.0)
 
     @property
-    def x2(self):
-        return self._x2
-    @x2.setter
-    def x2(self, value):
-        if not isinstance(value, int|float):
-            raise TypeError
-        self._x2 = max(min(value, 1.0),0.0)
-
-    @property
-    def y1(self):
+    def y1(self) -> float:
         return self._y1
     @y1.setter
     def y1(self, value):
@@ -79,7 +70,16 @@ class CubicBezier(ValueType):
         self._y1 = value
 
     @property
-    def y2(self):
+    def x2(self) -> float:
+        return self._x2
+    @x2.setter
+    def x2(self, value):
+        if not isinstance(value, int|float):
+            raise TypeError
+        self._x2 = max(min(value, 1.0),0.0)
+
+    @property
+    def y2(self) -> float:
         return self._y2
     @y2.setter
     def y2(self, value):
