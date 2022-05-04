@@ -19,7 +19,7 @@ __all__=[
 ]
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - Code -
+# - Support Functions -
 # ----------------------------------------------------------------------------------------------------------------------
 def timeConversion(original:int|float|_Time, cast:int|float|_Time) -> int|float|_Time:
     match original, cast:
@@ -77,6 +77,9 @@ def _timeConversionInput(fnc):
         return fnc(self,otherConverted, *_,**kwargs)
     return wrapper
 
+# ----------------------------------------------------------------------------------------------------------------------
+# - Classes -
+# ----------------------------------------------------------------------------------------------------------------------
 class _Time(ValueType, ABC):
     _value:int|float
     def __init__(self, value:int|float|Second|MilliSecond):
@@ -154,20 +157,34 @@ class _Time(ValueType, ABC):
     def __mod__(self, other: _Time | int | float) -> _Time:
         return type(self)(self.value % other.value)
 
-    def __iadd__(self, other):
-        return self.__add__(other)
-    def __isub__(self, other):
-        return self.__sub__(other)
-    def __imul__(self, other):
-        return self.__mul__(other)
-    def __ifloordiv__(self, other):
-        return self.__floordiv__(other)
-    def __itruediv__(self, other):
-        return self.__truediv__(other)
-    def __imod__(self, other):
-        return self.__mod__(other)
-    def __ipow__(self, other):
-        return self.__pow__(other)
+    @_timeConversionInput
+    def __iadd__(self, other: _Time | int | float):
+        self.value = self.value + other.value
+        return self
+    @_timeConversionInput
+    def __isub__(self, other: _Time | int | float):
+        self.value = self.value - other.value
+        return self
+    @_timeConversionInput
+    def __imul__(self, other: _Time | int | float):
+        self.value = self.value * other.value
+        return self
+    @_timeConversionInput
+    def __ifloordiv__(self, other: _Time | int | float):
+        self.value = self.value // other.value
+        return self
+    @_timeConversionInput
+    def __itruediv__(self, other: _Time | int | float):
+        self.value = self.value / other.value
+        return self
+    @_timeConversionInput
+    def __ipow__(self, other: _Time | int | float):
+        self.value = self.value ** other.value
+        return self
+    @_timeConversionInput
+    def __imod__(self, other: _Time | int | float):
+        self.value = self.value % other.value
+        return self
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Hour(_Time):
