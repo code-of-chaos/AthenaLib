@@ -159,31 +159,31 @@ class _Time(ValueType, ABC):
 
     @_timeConversionInput
     def __iadd__(self, other: _Time | int | float):
-        self.value = self.value + other.value
+        self.value += other.value
         return self
     @_timeConversionInput
     def __isub__(self, other: _Time | int | float):
-        self.value = self.value - other.value
+        self.value -= other.value
         return self
     @_timeConversionInput
     def __imul__(self, other: _Time | int | float):
-        self.value = self.value * other.value
+        self.value *= other.value
         return self
     @_timeConversionInput
     def __ifloordiv__(self, other: _Time | int | float):
-        self.value = self.value // other.value
+        self.value //= other.value
         return self
     @_timeConversionInput
     def __itruediv__(self, other: _Time | int | float):
-        self.value = self.value / other.value
+        self.value /= other.value
         return self
     @_timeConversionInput
     def __ipow__(self, other: _Time | int | float):
-        self.value = self.value ** other.value
+        self.value **= other.value
         return self
     @_timeConversionInput
     def __imod__(self, other: _Time | int | float):
-        self.value = self.value % other.value
+        self.value %= other.value
         return self
 
 # ----------------------------------------------------------------------------------------------------------------------

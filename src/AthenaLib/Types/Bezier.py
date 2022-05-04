@@ -76,7 +76,7 @@ class CubicBezier(ValueType):
     def y1(self, value):
         if not isinstance(value, int|float):
             raise TypeError
-        self._y1 = max(min(value, 1.0),0.0)
+        self._y1 = value
 
     @property
     def y2(self):
@@ -85,7 +85,7 @@ class CubicBezier(ValueType):
     def y2(self, value):
         if not isinstance(value, int|float):
             raise TypeError
-        self._y2 = max(min(value, 1.0),0.0)
+        self._y2 = value
 
     # ------------------------------------------------------------------------------------------------------------------
     # - cast dunders -
@@ -96,24 +96,24 @@ class CubicBezier(ValueType):
     def __repr__(self) -> str:
         return f"CubicBezier(x1={str(self.x1)},y1={str(self.y1)},x2={str(self.x2)},y2={str(self.y2)})"
     def __str__(self):
+        # Written this was because of css output
         return f"cubic-bezier({self.x1}, {self.y1}, {self.x2}, {self.y2})"
 
     # ------------------------------------------------------------------------------------------------------------------
     # - Comparison Operations -
     # ------------------------------------------------------------------------------------------------------------------
-    def __eq__(self, other):
-        if isinstance(other, CubicBezier):
-            return all(a==b for a,b in zip(
-                (self.x1,self.y1,self.x2,self.y2),
-                (other.x1,other.y1,other.x2,other.y2),
-            ))
-        elif isinstance(other, tuple) and len(other) == 4 and all(isinstance(t,(int|float)) for t in other):
-            return all(a==b for a,b in zip(
-                (self.x1,self.y1,self.x2,self.y2),
-                (*other,),
-            ))
-        else:
-            return NotImplemented
+    def __eq__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=eq, left=self, right=other)
+    def __ne__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=ne, left=self, right=other)
+    def __gt__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=gt, left=self, right=other)
+    def __lt__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=lt, left=self, right=other)
+    def __ge__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=ge, left=self, right=other)
+    def __le__(self, other: CubicBezier | int | float) -> bool:
+        return dunder_func(func=le, left=self, right=other)
 
     # ------------------------------------------------------------------------------------------------------------------
     # - math Operations -

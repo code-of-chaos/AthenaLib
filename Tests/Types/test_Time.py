@@ -101,13 +101,6 @@ class Time(TypesTesting):
             (operator.truediv,  Second(7),      2,      Second(3.5)),
             (operator.pow,      Second(4),      4,      Second(256)),
             (operator.mod,      Second(7),      3,      Second(1)),
-            (operator.iadd,      Second(1),      2,      Second(3)),
-            (operator.isub,      Second(5),      1,      Second(4)),
-            (operator.imul,      Second(5),      2,      Second(10)),
-            (operator.ifloordiv, Second(7),      2,      Second(3)),
-            (operator.itruediv,  Second(7),      2,      Second(3.5)),
-            (operator.ipow,      Second(4),      4,      Second(256)),
-            (operator.imod,      Second(7),      3,      Second(1)),
 
             (operator.eq,       Second(1),      1,      True),
             (operator.eq,       Second(1),      2,      False),
@@ -164,6 +157,15 @@ class Time(TypesTesting):
             (operator.truediv,  Second(7),      Minute(2),      Second(7/120)),
             (operator.pow,      Second(4),      Minute(1),      Second(4**60)),
             (operator.mod,      Second(7),      Minute(3),      Second(7%180)),
+
+            (operator.iadd,     Second(1),      .2,      Second(1.2)),
+            (operator.isub,     Second(5),      .1,      Second(4.9)),
+            (operator.imul,     Second(5),      .2,      Second(1.0)),
+            (operator.ifloordiv,Second(7),      .2,      Second(34.0)),
+            (operator.itruediv, Second(7),      .2,      Second(35.0)),
+            (operator.ipow,     Second(4),      .4,      Second(1.7411011265922482)),
+            (operator.imod,     Second(7),      .3,      Second(0.10000000000000026)),
+
 
         )
         self.SubtestFunctionDunderFunctions(casesDunderFunctions)
