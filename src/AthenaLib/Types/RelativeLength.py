@@ -15,7 +15,7 @@ from .ValueType import ValueType
 # ----------------------------------------------------------------------------------------------------------------------
 __all__ = [
     "ElementFontSize", "ElementFontHeight", "ZeroCharacterWidth", "RootElementFontSize", "ViewportWidthPercent",
-    "ViewportHeightPercent", "ViewportLargerPercent", "ViewportSmallerPercent"
+    "ViewportHeightPercent", "ViewportLargerPercent", "ViewportSmallerPercent","Percent"
 ]
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -174,7 +174,7 @@ class RootElementFontSize(_RelativeLength):
     def __str__(self):
         return f"{self.value}rem"
     def __repr__(self) -> str:
-        return f"ElementFontSize(value={self.value})"
+        return f"RootElementFontSize(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ViewportWidthPercent(_RelativeLength):
@@ -203,3 +203,10 @@ class ViewportLargerPercent(_RelativeLength):
         return f"{self.value}vmax"
     def __repr__(self) -> str:
         return f"ViewportLargerPercent(value={self.value})"
+
+# ----------------------------------------------------------------------------------------------------------------------
+class Percent(_RelativeLength):
+    def __str__(self):
+        return f"{self.value}%"
+    def __repr__(self) -> str:
+        return f"Percent(value={self.value})"
