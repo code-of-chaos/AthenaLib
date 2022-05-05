@@ -25,7 +25,7 @@ class TypesTesting(unittest.TestCase):
 
     def SubtestFunctionDunderFunctions(self, cases):
         for operation, left, right, result in cases:
-            with self.subTest(left=left, right=right, result=result):
+            with self.subTest(operation=operation,left=left, right=right, result=result):
                 self.assertEqual(operation(left, right), result)
 
     def SubtestFunctionFails(self, ValueType_, cases):
