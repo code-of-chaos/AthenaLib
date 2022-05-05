@@ -29,12 +29,12 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     value,      result,
-            (repr,          (0,),       "Hour(value=0)"),
-            (str,           (0,),       "0h"),
-            (int,           (0,),       0),
-            (float,         (1,),       1.0),
-            (abs,           (-100,),    Hour(value=100)),
+            # operation     oargs  okwargs    value,      kwargs    result,
+            (repr,          (),     {},       (0,),       {},       "Hour(value=0)"),
+            (str,           (),     {},       (0,),       {},       "0h"),
+            (int,           (),     {},       (0,),       {},       0),
+            (float,         (),     {},       (1,),       {},       1.0),
+            (abs,           (),     {},       (-100,),    {},       Hour(value=100)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 
@@ -55,12 +55,12 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      value,      result,
-            (repr,          (0,),       "Minute(value=0)"),
-            (str,           (0,),       "0m"),
-            (int,           (0,),       0),
-            (float,         (1,),       1.0),
-            (abs,           (-100,),    Minute(value=100)),
+            #operation      oargs  okwargs    value,      kwargs   result,
+            (repr,          (),     {},       (0,),       {},      "Minute(value=0)"),
+            (str,           (),     {},       (0,),       {},      "0m"),
+            (int,           (),     {},       (0,),       {},      0),
+            (float,         (),     {},       (1,),       {},      1.0),
+            (abs,           (),     {},       (-100,),    {},      Minute(value=100)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 
@@ -82,11 +82,11 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      value,      result,
-            (repr,          (0,),       "Second(value=0)"),
-            (str,           (0,),       "0s"),
-            (int,           (0,),       0),
-            (abs,           (-100,),    Second(value=100)),
+            #operation      oargs  okwargs    value,      kwargs    result,
+            (repr,          (),     {},       (0,),       {},       "Second(value=0)"),
+            (str,           (),     {},       (0,),       {},       "0s"),
+            (int,           (),     {},       (0,),       {},       0),
+            (abs,           (),     {},       (-100,),    {},       Second(value=100)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 
@@ -190,12 +190,12 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      value,      result,
-            (repr,          (0,),       "MilliSecond(value=0)"),
-            (str,           (0,),       "0ms"),
-            (int,           (0,),       0),
-            (float,         (1,),       1.0),
-            (abs,           (-100,),    MilliSecond(value=100)),
+            #operation      oargs  okwargs    value,      kwargs    result,
+            (repr,          (),     {},       (0,),       {},       "MilliSecond(value=0)"),
+            (str,           (),     {},       (0,),       {},       "0ms"),
+            (int,           (),     {},       (0,),       {},       0),
+            (float,         (),     {},       (1,),       {},       1.0),
+            (abs,           (),     {},       (-100,),    {},       MilliSecond(value=100)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 

@@ -36,9 +36,9 @@ class WebsiteUrl(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     value,              result,
-            (repr,          ("github.com",),    "Url(value='https://www.github.com/')"),
-            (str,           ("github.com",),    "https://www.github.com/"),
+            # operation     oargs  okwargs    value,              kwargs   result,
+            (repr,          (),     {},       ("github.com",),    {},      "Url(value='https://www.github.com/')"),
+            (str,           (),     {},       ("github.com",),    {},      "https://www.github.com/"),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 

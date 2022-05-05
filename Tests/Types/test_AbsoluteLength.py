@@ -29,11 +29,11 @@ class AbsoluteLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     value,          result,
-            (str,           (100,),         "100px"),
-            (int,           (100,),         100),
-            (abs,           (-100,),        Pixel(100)),
-            (repr,          (100,),         "Pixel(value=100)"),
+            # operation     oargs  okwargs    value,          kwargs   result,
+            (str,           (),     {},       (100,),         {},      "100px"),
+            (int,           (),     {},       (100,),         {},      100),
+            (abs,           (),     {},       (-100,),        {},      Pixel(100)),
+            (repr,          (),     {},       (100,),         {},      "Pixel(value=100)"),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 

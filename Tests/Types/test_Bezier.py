@@ -30,11 +30,11 @@ class Bezier(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     value,          result,
-            (repr,          (1,1,1,1),      "CubicBezier(x1=1,y1=1,x2=1,y2=1)"),
-            (repr,          (1,2,3,4),      "CubicBezier(x1=1,y1=2,x2=1.0,y2=4)"),
-            (str,           (1,2,3,4),      "cubic-bezier(1, 2, 1.0, 4)"),
-            (abs,           (-1,-1,-1,-1),  CubicBezier(0,1,0,1)),
+            # operation     oargs  okwargs    value,          kwargs   result,
+            (repr,          (),     {},       (1,1,1,1),      {},      "CubicBezier(x1=1,y1=1,x2=1,y2=1)"),
+            (repr,          (),     {},       (1,2,3,4),      {},      "CubicBezier(x1=1,y1=2,x2=1.0,y2=4)"),
+            (str,           (),     {},       (1,2,3,4),      {},      "cubic-bezier(1, 2, 1.0, 4)"),
+            (abs,           (),     {},       (-1,-1,-1,-1),  {},      CubicBezier(0,1,0,1)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 
