@@ -34,6 +34,7 @@ class AbsoluteLength(TypesTesting):
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      Pixel(100)),
             (repr,          (),     {},       (100,),         {},      "Pixel(value=100)"),
+            (round,         (5,),   {},       (.123456789,),  {},      Pixel(.12346)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 

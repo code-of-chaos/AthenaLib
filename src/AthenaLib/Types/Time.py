@@ -105,6 +105,8 @@ class _Time(ValueType, ABC):
         return float(self.value)
     def __abs__(self) -> _Time:
         return type(self)(abs(self.value))
+    def __round__(self, n=None):
+        return type(self)(round(self.value, n))
 
     @abstractmethod
     def __str__(self)->str:...

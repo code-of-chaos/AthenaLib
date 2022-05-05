@@ -35,6 +35,7 @@ class Bezier(TypesTesting):
             (repr,          (),     {},       (1,2,3,4),      {},      "CubicBezier(x1=1,y1=2,x2=1.0,y2=4)"),
             (str,           (),     {},       (1,2,3,4),      {},      "cubic-bezier(1, 2, 1.0, 4)"),
             (abs,           (),     {},       (-1,-1,-1,-1),  {},      CubicBezier(0,1,0,1)),
+            (round,         (5,),   {},       (.123456789,.123456789,.123456789,.123456789),{},CubicBezier(.12346,.12346,.12346,.12346)),
         )
         self.SubtestFunctionOperations(ValueType_, casesOperations)
 
