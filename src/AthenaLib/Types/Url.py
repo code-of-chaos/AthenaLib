@@ -29,9 +29,9 @@ class Url(ValueType):
         self._url = value
 
     def __str__(self) -> str:
-        return f'url("{self._url}")'
+        return f'url("{self.url}")'
     def __repr__(self) -> str:
-        return f"Url(value={self.url=})"
+        return f"Url(value={self.url})"
 
     def __eq__(self, other: Url | str) -> bool:
         if isinstance(other, Url):

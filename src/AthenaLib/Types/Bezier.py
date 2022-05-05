@@ -94,7 +94,7 @@ class CubicBezier(ValueType):
         return CubicBezier(abs(self.x1),abs(self.y1),abs(self.x2),abs(self.y2))
 
     def __repr__(self) -> str:
-        return f"CubicBezier(x1={str(self.x1)},y1={str(self.y1)},x2={str(self.x2)},y2={str(self.y2)})"
+        return f"CubicBezier(x1={self.x1},y1={self.y1},x2={self.x2},y2={self.y2})"
     def __str__(self):
         # Written this was because of css output
         return f"cubic-bezier({self.x1}, {self.y1}, {self.x2}, {self.y2})"

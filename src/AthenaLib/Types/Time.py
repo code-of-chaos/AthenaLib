@@ -190,25 +190,25 @@ class _Time(ValueType, ABC):
 # ----------------------------------------------------------------------------------------------------------------------
 class Hour(_Time):
     def __str__(self):
-        return f"{str(self.value)}h"
+        return f"{self.value}h"
     def __repr__(self) -> str:
-        return f"Hour(value={str(self.value)})"
+        return f"Hour(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Minute(_Time):
     def __str__(self):
-        return f"{str(self.value)}m"
+        return f"{self.value}m"
     def __repr__(self) -> str:
-        return f"Minute(value={str(self.value)})"
+        return f"Minute(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Second(_Time):
     def __str__(self):
-        return f"{str(self.value)}s"
+        return f"{self.value}s"
     def __repr__(self) -> str:
-        return f"Second(value={str(self.value)})"
+        return f"Second(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class MilliSecond(_Time):
     def __str__(self):
-        return f"{str(self.value)}ms"
+        return f"{self.value}ms"
     def __repr__(self) -> str:
-        return f"MilliSecond(value={str(self.value)})"
+        return f"MilliSecond(value={self.value})"
 

@@ -320,55 +320,55 @@ class _AbsoluteLength(ValueType, ABC):
 # ----------------------------------------------------------------------------------------------------------------------
 class Pica(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}pc"
+        return f"{self.value}pc"
     def __repr__(self) -> str:
-        return f"Pica(value={str(self.value)})"
+        return f"Pica(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Point(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}pt"
+        return f"{self.value}pt"
     def __repr__(self) -> str:
-        return f"Point(value={str(self.value)})"
+        return f"Point(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Pixel(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}px"
+        return f"{self.value}px"
     def __repr__(self) -> str:
-        return f"Pixel(value={str(self.value)})"
+        return f"Pixel(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Inch(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}in"
+        return f"{self.value}in"
     def __repr__(self) -> str:
-        return f"Inch(value={str(self.value)})"
+        return f"Inch(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class MilliMeter(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}mm"
+        return f"{self.value}mm"
     def __repr__(self) -> str:
-        return f"MilliMeter(value={str(self.value)})"
+        return f"MilliMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class CentiMeter(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}cm"
+        return f"{self.value}cm"
     def __repr__(self) -> str:
-        return f"CentiMeter(value={str(self.value)})"
+        return f"CentiMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class DeciMeter(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}dm"
+        return f"{self.value}dm"
     def __repr__(self) -> str:
-        return f"DeciMeter(value={str(self.value)})"
+        return f"DeciMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Meter(_AbsoluteLength):
     def __str__(self):
-        return f"{str(self.value)}m"
+        return f"{self.value}m"
     def __repr__(self) -> str:
-        return f"Meter(value={str(self.value)})"
+        return f"Meter(value={self.value})"
