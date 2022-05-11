@@ -66,7 +66,6 @@ class _RelativeLength(ValueType, ABC):
         return type(self)(abs(self.value))
     def __round__(self, n=None):
         return type(self)(round(self.value, n))
-
     def __hash__(self) -> int:
         return hash(self.value)
 
