@@ -3,6 +3,7 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
+import re
 
 # Custom Library
 
@@ -14,6 +15,7 @@ from .ValueType import ValueType
 # ----------------------------------------------------------------------------------------------------------------------
 class Url(ValueType):
     _value:str
+    pattern=r'[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi'
     def __init__(self, value:str):
         self.url = value
 
@@ -25,7 +27,8 @@ class Url(ValueType):
     def url(self, value):
         if not isinstance(value, str):
             raise TypeError
-        # todo write some magic function to check urls
+        if re.match(self.pattern, value) is None:
+            raise ValueError
         self._url = value
 
     def __str__(self) -> str:
