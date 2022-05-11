@@ -14,7 +14,7 @@ from .ValueType import ValueType
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__=[
-    "absoluteLengthConverion",
+    "absoluteLengthConversion",
     "Pixel", "Pica", "Point",
     "Inch",
     "Meter", "DeciMeter", "CentiMeter", "MilliMeter"
@@ -23,7 +23,7 @@ __all__=[
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Functions -
 # ----------------------------------------------------------------------------------------------------------------------
-def absoluteLengthConverion(original: int | float | _AbsoluteLength, cast: int | float | _AbsoluteLength, *, pixels_per_inch:int=96) -> int | float | _AbsoluteLength:
+def absoluteLengthConversion(original: int | float | _AbsoluteLength, cast: int | float | _AbsoluteLength, *, pixels_per_inch:int=96) -> int | float | _AbsoluteLength:
     match original, cast:
         # General catches for throwing to and from numbers
         case int()|float(), _AbsoluteLength():
@@ -199,7 +199,7 @@ def _absoluteLengthConversionInput(fnc):
         else:
             other, _ = args, ()
 
-        if (otherConverted := absoluteLengthConverion(other, self, pixels_per_inch=self.pixels_per_inch)) is NotImplemented:
+        if (otherConverted := absoluteLengthConversion(other, self, pixels_per_inch=self.pixels_per_inch)) is NotImplemented:
             return NotImplemented
         return fnc(self,otherConverted, *_,**kwargs)
     return wrapper

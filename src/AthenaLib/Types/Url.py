@@ -33,6 +33,9 @@ class Url(ValueType):
     def __repr__(self) -> str:
         return f"Url(value={self.url})"
 
+    def __hash__(self) -> int:
+        return hash(self.url)
+
     def __eq__(self, other: Url | str) -> bool:
         if isinstance(other, Url):
             return self.url == other.url
