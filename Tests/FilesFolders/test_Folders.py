@@ -10,7 +10,7 @@ import os
 # Custom Packages
 from AthenaLib.FilesFolders.Folders import (
     folder_content, folder_content_folders, folder_content_files, folder_exists, folder_content_files_extensions,
-    folder_existsNot, folder_content_walk, folder_move
+    folder_existsNot, folder_content_walk
 )
 
 

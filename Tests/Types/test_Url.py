@@ -6,8 +6,6 @@ from __future__ import annotations
 
 import unittest
 
-import operator
-
 # Custom Library
 from AthenaLib.Types.Url import Url
 

@@ -7,6 +7,7 @@ import operator
 
 # Custom Library
 from AthenaLib.Types.RelativeLength import *
+from AthenaLib.Types.Math import Percent
 
 # Custom Packages
 from .TypesTesting import TypesTesting
