@@ -23,16 +23,16 @@ __all__=[
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Functions -
 # ----------------------------------------------------------------------------------------------------------------------
-def absoluteLengthConversion(original: int | float | _AbsoluteLength, cast: int | float | _AbsoluteLength, *, pixels_per_inch:int=96) -> int | float | _AbsoluteLength:
+def absoluteLengthConversion(original: int | float | AbsoluteLength, cast: int | float | AbsoluteLength, *, pixels_per_inch:int=96) -> int | float | AbsoluteLength:
     match original, cast:
         # General catches for throwing to and from numbers
-        case int()|float(), _AbsoluteLength():
+        case int()|float(), AbsoluteLength():
             return type(cast)(original)
-        case _AbsoluteLength(), int() | float():
+        case AbsoluteLength(), int() | float():
             return type(cast)(original.value)
 
         # To length Types, if both types are the same (Pixel->Pixel)
-        case a,b if type(a) is type(b) and isinstance(a, _AbsoluteLength) and isinstance(b, _AbsoluteLength):
+        case a,b if type(a) is type(b) and isinstance(a, AbsoluteLength) and isinstance(b, AbsoluteLength):
             return type(cast)(original.value)
 
         # Pica
@@ -193,7 +193,7 @@ def absoluteLengthConversion(original: int | float | _AbsoluteLength, cast: int 
             return NotImplemented
 
 def _absoluteLengthConversionInput(fnc):
-    def wrapper(self:_AbsoluteLength, *args, **kwargs):
+    def wrapper(self:AbsoluteLength, *args, **kwargs):
         if isinstance(args, tuple):
             other,*_ = args
         else:
@@ -207,10 +207,10 @@ def _absoluteLengthConversionInput(fnc):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class _AbsoluteLength(ValueType, ABC):
+class AbsoluteLength(ValueType, ABC):
     _value:int|float
     pixels_per_inch:int
-    def __init__(self, value: int | float | _AbsoluteLength):
+    def __init__(self, value: int | float | AbsoluteLength):
         self.value = value
         self.pixels_per_inch=96
 
@@ -231,7 +231,7 @@ class _AbsoluteLength(ValueType, ABC):
         return int(self.value)
     def __float__(self) -> float:
         return float(self.value)
-    def __abs__(self) -> _AbsoluteLength:
+    def __abs__(self) -> AbsoluteLength:
         return  type(self)(abs(self.value))
     def __round__(self, n=None):
         return  type(self)(round(self.value, n))
@@ -247,129 +247,129 @@ class _AbsoluteLength(ValueType, ABC):
     # - Comparison Operations -
     # ------------------------------------------------------------------------------------------------------------------
     @_absoluteLengthConversionInput
-    def __eq__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __eq__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value == other.value
     @_absoluteLengthConversionInput
-    def __ne__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __ne__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value != other.value
     @_absoluteLengthConversionInput
-    def __gt__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __gt__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value > other.value
     @_absoluteLengthConversionInput
-    def __lt__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __lt__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value < other.value
     @_absoluteLengthConversionInput
-    def __ge__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __ge__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value >= other.value
     @_absoluteLengthConversionInput
-    def __le__(self, other: _AbsoluteLength | int | float) -> bool:
+    def __le__(self, other: AbsoluteLength | int | float) -> bool:
         return self.value <= other.value
 
     # ------------------------------------------------------------------------------------------------------------------
     # - math Operations -
     # ------------------------------------------------------------------------------------------------------------------
     @_absoluteLengthConversionInput
-    def __add__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __add__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value + other.value)
     @_absoluteLengthConversionInput
-    def __sub__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __sub__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value - other.value)
     @_absoluteLengthConversionInput
-    def __mul__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __mul__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value * other.value)
     @_absoluteLengthConversionInput
-    def __floordiv__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __floordiv__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value // other.value)
     @_absoluteLengthConversionInput
-    def __truediv__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __truediv__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value / other.value)
     @_absoluteLengthConversionInput
-    def __pow__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __pow__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value ** other.value)
     @_absoluteLengthConversionInput
-    def __mod__(self, other: _AbsoluteLength | int | float) -> _AbsoluteLength:
+    def __mod__(self, other: AbsoluteLength | int | float) -> AbsoluteLength:
         return type(self)(self.value % other.value)
 
     @_absoluteLengthConversionInput
-    def __iadd__(self, other: _AbsoluteLength | int | float):
+    def __iadd__(self, other: AbsoluteLength | int | float):
         self.value += other.value
         return self
     @_absoluteLengthConversionInput
-    def __isub__(self, other: _AbsoluteLength | int | float):
+    def __isub__(self, other: AbsoluteLength | int | float):
         self.value -= other.value
         return self
     @_absoluteLengthConversionInput
-    def __imul__(self, other: _AbsoluteLength | int | float):
+    def __imul__(self, other: AbsoluteLength | int | float):
         self.value *= other.value
         return self
     @_absoluteLengthConversionInput
-    def __ifloordiv__(self, other: _AbsoluteLength | int | float):
+    def __ifloordiv__(self, other: AbsoluteLength | int | float):
         self.value //= other.value
         return self
     @_absoluteLengthConversionInput
-    def __itruediv__(self, other: _AbsoluteLength | int | float):
+    def __itruediv__(self, other: AbsoluteLength | int | float):
         self.value /= other.value
         return self
     @_absoluteLengthConversionInput
-    def __ipow__(self, other: _AbsoluteLength | int | float):
+    def __ipow__(self, other: AbsoluteLength | int | float):
         self.value **= other.value
         return self
     @_absoluteLengthConversionInput
-    def __imod__(self, other: _AbsoluteLength | int | float):
+    def __imod__(self, other: AbsoluteLength | int | float):
         self.value %= other.value
         return self
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Pica(_AbsoluteLength):
+class Pica(AbsoluteLength):
     def __str__(self):
         return f"{self.value}pc"
     def __repr__(self) -> str:
         return f"Pica(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Point(_AbsoluteLength):
+class Point(AbsoluteLength):
     def __str__(self):
         return f"{self.value}pt"
     def __repr__(self) -> str:
         return f"Point(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Pixel(_AbsoluteLength):
+class Pixel(AbsoluteLength):
     def __str__(self):
         return f"{self.value}px"
     def __repr__(self) -> str:
         return f"Pixel(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Inch(_AbsoluteLength):
+class Inch(AbsoluteLength):
     def __str__(self):
         return f"{self.value}in"
     def __repr__(self) -> str:
         return f"Inch(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class MilliMeter(_AbsoluteLength):
+class MilliMeter(AbsoluteLength):
     def __str__(self):
         return f"{self.value}mm"
     def __repr__(self) -> str:
         return f"MilliMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class CentiMeter(_AbsoluteLength):
+class CentiMeter(AbsoluteLength):
     def __str__(self):
         return f"{self.value}cm"
     def __repr__(self) -> str:
         return f"CentiMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class DeciMeter(_AbsoluteLength):
+class DeciMeter(AbsoluteLength):
     def __str__(self):
         return f"{self.value}dm"
     def __repr__(self) -> str:
         return f"DeciMeter(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class Meter(_AbsoluteLength):
+class Meter(AbsoluteLength):
     def __str__(self):
         return f"{self.value}m"
     def __repr__(self) -> str:
