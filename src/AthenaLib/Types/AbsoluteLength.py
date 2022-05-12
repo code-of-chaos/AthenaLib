@@ -14,7 +14,7 @@ from .ValueType import ValueType
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__=[
-    "absoluteLengthConversion",
+    "absoluteLengthConversion", "AbsoluteLength",
     "Pixel", "Pica", "Point",
     "Inch",
     "Meter", "DeciMeter", "CentiMeter", "MilliMeter"
