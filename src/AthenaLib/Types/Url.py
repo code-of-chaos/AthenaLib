@@ -45,5 +45,5 @@ class Url(ValueType):
         elif isinstance(other, str):
             return self.url == str(other)
         else:
-            raise NotImplemented
+            return NotImplemented
 

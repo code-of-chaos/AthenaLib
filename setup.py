@@ -11,7 +11,7 @@ import setuptools
 # ----------------------------------------------------------------------------------------------------------------------
 setuptools.setup(
     name="AthenaLib",
-    version="0.1.0",
+    version="0.2.0",
     author="Andreas Sas",
     author_email="",
     description="A Library of various code, used by Directive Athena Packages and applications",

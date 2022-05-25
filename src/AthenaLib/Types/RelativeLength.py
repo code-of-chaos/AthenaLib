@@ -14,15 +14,15 @@ from .ValueType import ValueType
 # - All -
 # ----------------------------------------------------------------------------------------------------------------------
 __all__ = [
-    "ElementFontSize", "ElementFontHeight", "ZeroCharacterWidth", "RootElementFontSize", "ViewportWidthPercent",
-    "ViewportHeightPercent", "ViewportLargerPercent", "ViewportSmallerPercent"
+    "RelativeLength","ElementFontSize", "ElementFontHeight", "ZeroCharacterWidth", "RootElementFontSize",
+    "ViewportWidthPercent", "ViewportHeightPercent", "ViewportLargerPercent", "ViewportSmallerPercent"
 ]
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Functions -
 # ----------------------------------------------------------------------------------------------------------------------
 def _relativeLengthConversionInput(fnc):
-    def wrapper(self:_RelativeLength, *args, **kwargs):
+    def wrapper(self:RelativeLength, *args, **kwargs):
         if isinstance(args, tuple):
             other,*args_ = args
         else:
@@ -40,9 +40,9 @@ def _relativeLengthConversionInput(fnc):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class _RelativeLength(ValueType, ABC):
+class RelativeLength(ValueType, ABC):
     _value:int|float
-    def __init__(self, value: int | float | _RelativeLength):
+    def __init__(self, value: int | float | RelativeLength):
         self.value = value
 
     @property
@@ -62,7 +62,7 @@ class _RelativeLength(ValueType, ABC):
         return int(self.value)
     def __float__(self) -> float:
         return float(self.value)
-    def __abs__(self) -> _RelativeLength:
+    def __abs__(self) -> RelativeLength:
         return type(self)(abs(self.value))
     def __round__(self, n=None):
         return type(self)(round(self.value, n))
@@ -78,129 +78,129 @@ class _RelativeLength(ValueType, ABC):
     # - Comparison Operations -
     # ------------------------------------------------------------------------------------------------------------------
     @_relativeLengthConversionInput
-    def __eq__(self, other: _RelativeLength | int | float) -> bool:
+    def __eq__(self, other: RelativeLength | int | float) -> bool:
         return self.value == other.value
     @_relativeLengthConversionInput
-    def __ne__(self, other: _RelativeLength | int | float) -> bool:
+    def __ne__(self, other: RelativeLength | int | float) -> bool:
         return self.value != other.value
     @_relativeLengthConversionInput
-    def __gt__(self, other: _RelativeLength | int | float) -> bool:
+    def __gt__(self, other: RelativeLength | int | float) -> bool:
         return self.value > other.value
     @_relativeLengthConversionInput
-    def __lt__(self, other: _RelativeLength | int | float) -> bool:
+    def __lt__(self, other: RelativeLength | int | float) -> bool:
         return self.value < other.value
     @_relativeLengthConversionInput
-    def __ge__(self, other: _RelativeLength | int | float) -> bool:
+    def __ge__(self, other: RelativeLength | int | float) -> bool:
         return self.value >= other.value
     @_relativeLengthConversionInput
-    def __le__(self, other: _RelativeLength | int | float) -> bool:
+    def __le__(self, other: RelativeLength | int | float) -> bool:
         return self.value <= other.value
 
     # ------------------------------------------------------------------------------------------------------------------
     # - math Operations -
     # ------------------------------------------------------------------------------------------------------------------
     @_relativeLengthConversionInput
-    def __add__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __add__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value + other.value)
     @_relativeLengthConversionInput
-    def __sub__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __sub__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value - other.value)
     @_relativeLengthConversionInput
-    def __mul__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __mul__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value * other.value)
     @_relativeLengthConversionInput
-    def __floordiv__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __floordiv__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value // other.value)
     @_relativeLengthConversionInput
-    def __truediv__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __truediv__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value / other.value)
     @_relativeLengthConversionInput
-    def __pow__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __pow__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value ** other.value)
     @_relativeLengthConversionInput
-    def __mod__(self, other: _RelativeLength | int | float) -> _RelativeLength:
+    def __mod__(self, other: RelativeLength | int | float) -> RelativeLength:
         return type(self)(self.value % other.value)
 
     @_relativeLengthConversionInput
-    def __iadd__(self, other: _RelativeLength | int | float):
+    def __iadd__(self, other: RelativeLength | int | float):
         self.value += other.value
         return self
     @_relativeLengthConversionInput
-    def __isub__(self, other: _RelativeLength | int | float):
+    def __isub__(self, other: RelativeLength | int | float):
         self.value -= other.value
         return self
     @_relativeLengthConversionInput
-    def __imul__(self, other: _RelativeLength | int | float):
+    def __imul__(self, other: RelativeLength | int | float):
         self.value *= other.value
         return self
     @_relativeLengthConversionInput
-    def __ifloordiv__(self, other: _RelativeLength | int | float):
+    def __ifloordiv__(self, other: RelativeLength | int | float):
         self.value //= other.value
         return self
     @_relativeLengthConversionInput
-    def __itruediv__(self, other: _RelativeLength | int | float):
+    def __itruediv__(self, other: RelativeLength | int | float):
         self.value /= other.value
         return self
     @_relativeLengthConversionInput
-    def __ipow__(self, other: _RelativeLength | int | float):
+    def __ipow__(self, other: RelativeLength | int | float):
         self.value **= other.value
         return self
     @_relativeLengthConversionInput
-    def __imod__(self, other: _RelativeLength | int | float):
+    def __imod__(self, other: RelativeLength | int | float):
         self.value %= other.value
         return self
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ElementFontSize(_RelativeLength):
+class ElementFontSize(RelativeLength):
     def __str__(self):
         return f"{self.value}em"
     def __repr__(self) -> str:
         return f"ElementFontSize(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ElementFontHeight(_RelativeLength):
+class ElementFontHeight(RelativeLength):
     def __str__(self):
         return f"{self.value}ex"
     def __repr__(self) -> str:
         return f"ElementFontHeight(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ZeroCharacterWidth(_RelativeLength):
+class ZeroCharacterWidth(RelativeLength):
     def __str__(self):
         return f"{self.value}ch"
     def __repr__(self) -> str:
         return f"ZeroCharacterWidth(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class RootElementFontSize(_RelativeLength):
+class RootElementFontSize(RelativeLength):
     def __str__(self):
         return f"{self.value}rem"
     def __repr__(self) -> str:
         return f"RootElementFontSize(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ViewportWidthPercent(_RelativeLength):
+class ViewportWidthPercent(RelativeLength):
     def __str__(self):
         return f"{self.value}vw"
     def __repr__(self) -> str:
         return f"ViewportWidthPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ViewportHeightPercent(_RelativeLength):
+class ViewportHeightPercent(RelativeLength):
     def __str__(self):
         return f"{self.value}vh"
     def __repr__(self) -> str:
         return f"ViewportHeightPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ViewportSmallerPercent(_RelativeLength):
+class ViewportSmallerPercent(RelativeLength):
     def __str__(self):
         return f"{self.value}vmin"
     def __repr__(self) -> str:
         return f"ViewportSmallerPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
-class ViewportLargerPercent(_RelativeLength):
+class ViewportLargerPercent(RelativeLength):
     def __str__(self):
         return f"{self.value}vmax"
     def __repr__(self) -> str:
