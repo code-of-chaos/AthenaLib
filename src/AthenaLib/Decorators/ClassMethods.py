@@ -16,8 +16,9 @@ def return_self_classmethod(fnc):
     """
     Decorator to make a class method return self consitently
     """
-    def wrapper(self, *args, **kwargs):
-        fnc(self, *args, **kwargs)
+    def wrapper(*args, **kwargs):
+        self, *args_ = args
+        fnc(self, *args_, **kwargs)
         return self
     return wrapper
 
@@ -25,8 +26,9 @@ def return_copy_classmethod(fnc):
     """
     Decorator to make a class method return a copy of itself
     """
-    def wrapper(self, *args, **kwargs):
-        fnc(self, *args, **kwargs)
+    def wrapper(*args, **kwargs):
+        self, *args_ = args
+        fnc(self, *args_, **kwargs)
         return copy.deepcopy(self)
     return wrapper
 
