@@ -8,7 +8,7 @@ import os
 # Custom Library
 
 # Custom Packages
-from AthenaLib.FilesFolders.Folders import (
+from AthenaLib.FileFolderManipulation.Folders import (
     folder_content, folder_content_folders, folder_content_files, folder_exists, folder_content_files_extensions,
     folder_existsNot, folder_content_walk
 )
