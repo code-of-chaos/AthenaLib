@@ -14,6 +14,6 @@ from dataclasses import dataclass
 # ----------------------------------------------------------------------------------------------------------------------
 @dataclass()
 class Version:
-    major: int
-    minor: int
+    major: int|str
+    minor: int|str
     fix: int|str
