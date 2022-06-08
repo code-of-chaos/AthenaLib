@@ -13,7 +13,7 @@ from dataclasses import dataclass
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @dataclass(
-    frozen=True
+    slots=True
 )
 class Version:
     major: int|str
