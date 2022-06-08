@@ -12,16 +12,17 @@ from dataclasses import dataclass
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-@dataclass()
+@dataclass(
+    frozen=True
+)
 class Version:
     major: int|str
     minor: int|str
     fix: int|str
 
-    @classmethod
-    def factory(cls) -> Version:
-        return Version(
-            major=0,
-            minor=0,
-            fix=0
-        )
+    def to_str(self, sep=".") -> str:
+        """Returns the full version in string format"""
+        return f"{self.major}{sep}{self.minor}{sep}{self.fix}"
+
+    def __str__(self):
+        return self.to_str()
