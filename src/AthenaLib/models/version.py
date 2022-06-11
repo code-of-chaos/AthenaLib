@@ -22,7 +22,7 @@ class Version:
 
     def to_str(self, sep:str=".") -> str:
         """Returns the full version in string format"""
-        return sep.join((self.major, self.minor, self.fix))
+        return sep.join((str(self.major), str(self.minor), str(self.fix)))
 
     def to_dict(self, *, major_str:str="Major", minor_str:str="Minor", fix_str:str="Fix") -> dict:
         return {
