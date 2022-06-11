@@ -14,20 +14,20 @@ from typing import NamedTuple
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @dataclass(unsafe_hash=True, slots=True)
-class Vector1D(NamedTuple):
+class Vector1D:
     x:int|float = 0.
 
     # todo math
 
 @dataclass(unsafe_hash=True, slots=True)
-class Vector2D(NamedTuple):
+class Vector2D:
     x:int|float = 0.
     y:int|float = 0.
 
     # todo math
 
 @dataclass(unsafe_hash=True, slots=True)
-class Vector3D(NamedTuple):
+class Vector3D:
     x:int|float = 0.
     y:int|float = 0.
     z:int|float = 0.
