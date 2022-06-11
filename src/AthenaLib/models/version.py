@@ -16,6 +16,9 @@ from dataclasses import dataclass
     slots=True
 )
 class Version:
+    """
+    A class to hold a standardized version format.
+    """
     major: int|str
     minor: int|str
     fix: int|str
