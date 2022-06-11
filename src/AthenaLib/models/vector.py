@@ -4,6 +4,7 @@
 # General Packages
 from __future__ import annotations
 from dataclasses import dataclass, field
+from typing import NamedTuple
 
 # Custom Library
 
@@ -13,20 +14,20 @@ from dataclasses import dataclass, field
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @dataclass(unsafe_hash=True, slots=True)
-class vector1D:
+class Vector1D(NamedTuple):
     x:int|float = 0.
 
     # todo math
 
 @dataclass(unsafe_hash=True, slots=True)
-class vector2D:
+class Vector2D(NamedTuple):
     x:int|float = 0.
     y:int|float = 0.
 
     # todo math
 
 @dataclass(unsafe_hash=True, slots=True)
-class vector3D:
+class Vector3D(NamedTuple):
     x:int|float = 0.
     y:int|float = 0.
     z:int|float = 0.
