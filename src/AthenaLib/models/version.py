@@ -20,15 +20,15 @@ class Version:
     minor: int|str
     fix: int|str
 
-    def to_str(self, sep=".") -> str:
+    def to_str(self, sep:str=".") -> str:
         """Returns the full version in string format"""
-        return f"{self.major}{sep}{self.minor}{sep}{self.fix}"
+        return sep.join((self.major, self.minor, self.fix))
 
-    def to_dict(self) -> dict:
+    def to_dict(self, *, major_str:str="Major", minor_str:str="Minor", fix_str:str="Fix") -> dict:
         return {
-            "Major":self.major,
-            "Minor":self.minor,
-            "Fix":self.fix
+            major_str:self.major,
+            minor_str:self.minor,
+            fix_str:self.fix
         }
 
     def __str__(self):
