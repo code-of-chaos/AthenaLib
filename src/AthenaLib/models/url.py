@@ -30,8 +30,6 @@ class Url:
             raise ValueError
         self._url = value
 
-    def __str__(self) -> str:
-        return f'url("{self.url}")'
     def __repr__(self) -> str:
         return f"Url(value={self.url})"
 
