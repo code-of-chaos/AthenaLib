@@ -1,5 +1,4 @@
 # ----------------------------------------------------------------------------------------------------------------------
-# - AthenaLib -
+# - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
-# noinspection PyProtectedMember
-from AthenaLib._info.info import info
+import AthenaLib.functions.dunder_math as dunder_math

@@ -1,5 +1,4 @@
 # ----------------------------------------------------------------------------------------------------------------------
-# - AthenaLib -
+# - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
-# noinspection PyProtectedMember
-from AthenaLib._info.info import info
+from AthenaLib.fixes.asyncio import fix_nested_asyncio

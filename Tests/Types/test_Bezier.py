@@ -6,7 +6,7 @@ from __future__ import annotations
 import operator
 
 # Custom Library
-from AthenaLib.Types.Bezier import *
+from AthenaLib.models.bezier import *
 
 # Custom Packages
 from .TypesTesting import TypesTesting
@@ -30,7 +30,7 @@ class Bezier(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    value,          kwargs   result,
+            # operation     oArgs  oKwargs    value,          kwargs   result,
             (repr,          (),     {},       (1,1,1,1),      {},      "CubicBezier(x1=1,y1=1,x2=1,y2=1)"),
             (repr,          (),     {},       (1,2,3,4),      {},      "CubicBezier(x1=1,y1=2,x2=1.0,y2=4)"),
             (str,           (),     {},       (1,2,3,4),      {},      "cubic-bezier(1, 2, 1.0, 4)"),

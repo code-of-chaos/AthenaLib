@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 # Custom Library
 
 # Custom Packages
-from .ValueType import ValueType
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -40,7 +39,7 @@ def _relativeLengthConversionInput(fnc):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class RelativeLength(ValueType, ABC):
+class RelativeLength(ABC):
     _value:int|float
     def __init__(self, value: int | float | RelativeLength):
         self.value = value

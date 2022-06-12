@@ -8,8 +8,7 @@ from typing import Callable
 # Custom Library
 
 # Custom Packages
-from .ValueType import ValueType
-from AthenaLib.DunderFunctions.DunderFunctions import *
+import AthenaLib.functions.dunder_math as dunder_math
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -21,7 +20,7 @@ __all__=[
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Functions -
 # ----------------------------------------------------------------------------------------------------------------------
-def dunder_func(func:Callable,left,right:CubicBezier|int|float|tuple):
+def dunder_func(func:Callable,left:CubicBezier,right:CubicBezier|int|float|tuple):
     if type(left) is type(right):
         return func(
             (left.x1,left.y1,left.x2,left.y2),
@@ -42,7 +41,7 @@ def dunder_func(func:Callable,left,right:CubicBezier|int|float|tuple):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class CubicBezier(ValueType):
+class CubicBezier:
     _x1:float
     _y1:float
     _x2:float
@@ -106,82 +105,82 @@ class CubicBezier(ValueType):
     # - Comparison Operations -
     # ------------------------------------------------------------------------------------------------------------------
     def __eq__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=eq, left=self, right=other)
+        return dunder_func(func=dunder_math.eq, left=self, right=other)
     def __ne__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=ne, left=self, right=other)
+        return dunder_func(func=dunder_math.ne, left=self, right=other)
     def __gt__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=gt, left=self, right=other)
+        return dunder_func(func=dunder_math.gt, left=self, right=other)
     def __lt__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=lt, left=self, right=other)
+        return dunder_func(func=dunder_math.lt, left=self, right=other)
     def __ge__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=ge, left=self, right=other)
+        return dunder_func(func=dunder_math.ge, left=self, right=other)
     def __le__(self, other: CubicBezier | int | float) -> bool:
-        return dunder_func(func=le, left=self, right=other)
+        return dunder_func(func=dunder_math.le, left=self, right=other)
 
     # ------------------------------------------------------------------------------------------------------------------
     # - math Operations -
     # ------------------------------------------------------------------------------------------------------------------
     def __add__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=add, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.add, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __sub__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=sub, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.sub, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __mul__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=mul, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.mul, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __floordiv__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=floordiv, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.floordiv, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __truediv__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=truediv, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.truediv, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __pow__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=power, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.power, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
     def __mod__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=mod, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.mod, left=self, right=other)) is NotImplemented:
             return result
         return type(self)(*result)
 
     def __iadd__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=add, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.add, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __isub__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=sub, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.sub, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __imul__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=mul, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.mul, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __ifloordiv__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=floordiv, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.floordiv, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __itruediv__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=truediv, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.truediv, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __ipow__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=power, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.power, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self
     def __imod__(self, other) -> CubicBezier:
-        if (result:= dunder_func(func=mod, left=self, right=other)) is NotImplemented:
+        if (result:= dunder_func(func=dunder_math.mod, left=self, right=other)) is NotImplemented:
             return result
         self.x1,self.y1,self.x2,self.y2 = result
         return self

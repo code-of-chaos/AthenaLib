@@ -6,8 +6,8 @@ from __future__ import annotations
 import operator
 
 # Custom Library
-from AthenaLib.Types.RelativeLength import *
-from AthenaLib.Types.Math import Percent
+from AthenaLib.models.length_relative import *
+from AthenaLib.models.math import Percent
 
 # Custom Packages
 from .TypesTesting import TypesTesting
@@ -78,7 +78,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100em"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ElementFontSize(100)),
@@ -106,7 +106,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100ex"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ElementFontHeight(100)),
@@ -134,7 +134,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100ch"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ZeroCharacterWidth(100)),
@@ -162,7 +162,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100rem"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      RootElementFontSize(100)),
@@ -190,7 +190,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100vw"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ViewportWidthPercent(100)),
@@ -218,7 +218,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100vh"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ViewportHeightPercent(100)),
@@ -246,7 +246,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100vmin"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ViewportSmallerPercent(100)),
@@ -274,7 +274,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100vmax"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      ViewportLargerPercent(100)),
@@ -302,7 +302,7 @@ class RelativeLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    args,           kwargs   result,
+            # operation     oArgs  oKwargs    args,           kwargs   result,
             (str,           (),     {},       (100,),         {},      "100%"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      Percent(100)),

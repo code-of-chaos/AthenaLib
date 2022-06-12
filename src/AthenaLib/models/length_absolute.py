@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 # Custom Library
 
 # Custom Packages
-from .ValueType import ValueType
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -207,7 +206,7 @@ def _absoluteLengthConversionInput(fnc):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class AbsoluteLength(ValueType, ABC):
+class AbsoluteLength(ABC):
     _value:int|float
     pixels_per_inch:int
     def __init__(self, value: int | float | AbsoluteLength):

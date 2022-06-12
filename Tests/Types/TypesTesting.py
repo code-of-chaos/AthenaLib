@@ -19,9 +19,9 @@ class TypesTesting(unittest.TestCase):
                 self.assertEqual(ValueType_(*value), result)
 
     def SubtestFunctionOperations(self, ValueType_, cases):
-        for operation, oargs, okwargs, args, kwargs, result in cases:
+        for operation, oArgs, oKwargs, args, kwargs, result in cases:
             with self.subTest(args=args, kwargs=kwargs, result=result, ):
-                self.assertEqual(operation(ValueType_(*args, **kwargs), *oargs, *okwargs), result)
+                self.assertEqual(operation(ValueType_(*args, **kwargs), *oArgs, *oKwargs), result)
 
     def SubtestFunctionDunderFunctions(self, cases):
         for operation, left, right, result in cases:

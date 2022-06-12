@@ -1,0 +1,3 @@
+AthenaLib~=0.3.0
+AthenaColor~=5.1.1
+setuptools~=60.2.0

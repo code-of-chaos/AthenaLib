@@ -6,7 +6,7 @@ from __future__ import annotations
 import operator
 
 # Custom Library
-from AthenaLib.Types.Time import *
+from AthenaLib.models.time import *
 
 # Custom Packages
 from .TypesTesting import TypesTesting
@@ -29,7 +29,7 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    value,            kwargs      result,
+            # operation     oArgs  oKwargs    value,            kwargs      result,
             (repr,          (),     {},       (0,),             {},         "Hour(value=0)"),
             (str,           (),     {},       (0,),             {},         "0h"),
             (int,           (),     {},       (0,),             {},         0),
@@ -56,7 +56,7 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      oargs  okwargs    value,            kwargs      result,
+            #operation      oArgs  oKwargs    value,            kwargs      result,
             (repr,          (),     {},       (0,),             {},         "Minute(value=0)"),
             (str,           (),     {},       (0,),             {},         "0m"),
             (int,           (),     {},       (0,),             {},         0),
@@ -84,7 +84,7 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      oargs  okwargs    value,            kwargs      result,
+            #operation      oArgs  oKwargs    value,            kwargs      result,
             (repr,          (),     {},       (0,),             {},         "Second(value=0)"),
             (str,           (),     {},       (0,),             {},         "0s"),
             (int,           (),     {},       (0,),             {},         0),
@@ -193,7 +193,7 @@ class Time(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            #operation      oargs  okwargs    value,            kwargs      result,
+            #operation      oArgs  oKwargs    value,            kwargs      result,
             (repr,          (),     {},       (0,),             {},         "MilliSecond(value=0)"),
             (str,           (),     {},       (0,),             {},         "0ms"),
             (int,           (),     {},       (0,),             {},         0),

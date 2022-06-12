@@ -8,7 +8,6 @@ from abc import ABC, abstractmethod
 # Custom Library
 
 # Custom Packages
-from .ValueType import ValueType
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
@@ -80,7 +79,7 @@ def _timeConversionInput(fnc):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Classes -
 # ----------------------------------------------------------------------------------------------------------------------
-class TimeValue(ValueType, ABC):
+class TimeValue(ABC):
     _value:int|float
 
     def __init__(self, value: int | float | TimeValue):

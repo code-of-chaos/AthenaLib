@@ -16,19 +16,22 @@ from dataclasses import dataclass
     slots=True
 )
 class Version:
+    """
+    A class to hold a standardized version format.
+    """
     major: int|str
     minor: int|str
     fix: int|str
 
-    def to_str(self, sep=".") -> str:
+    def to_str(self, sep:str=".") -> str:
         """Returns the full version in string format"""
-        return f"{self.major}{sep}{self.minor}{sep}{self.fix}"
+        return sep.join((str(self.major), str(self.minor), str(self.fix)))
 
-    def to_dict(self) -> dict:
+    def to_dict(self, *, major_str:str="Major", minor_str:str="Minor", fix_str:str="Fix") -> dict:
         return {
-            "Major":self.major,
-            "Minor":self.minor,
-            "Fix":self.fix
+            major_str:self.major,
+            minor_str:self.minor,
+            fix_str:self.fix
         }
 
     def __str__(self):

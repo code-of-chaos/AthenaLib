@@ -6,7 +6,7 @@ from __future__ import annotations
 import operator
 
 # Custom Library
-from AthenaLib.Types.AbsoluteLength import *
+from AthenaLib.models.length_absolute import *
 
 # Custom Packages
 from .TypesTesting import TypesTesting
@@ -29,7 +29,7 @@ class AbsoluteLength(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    value,          kwargs   result,
+            # operation     oArgs  oKwargs    value,          kwargs   result,
             (str,           (),     {},       (100,),         {},      "100px"),
             (int,           (),     {},       (100,),         {},      100),
             (abs,           (),     {},       (-100,),        {},      Pixel(100)),
