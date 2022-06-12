@@ -5,7 +5,7 @@
 import unittest
 
 # Custom Library
-from AthenaLib.Fixes.Asyncio import fix_nested_asyncio
+from AthenaLib.fixes.asyncio import fix_nested_asyncio
 
 # Custom Packages
 
@@ -17,4 +17,4 @@ class Test(unittest.TestCase):
         try:
             fix_nested_asyncio()
         except ImportError:
-            self.fail("test_nested_asyncio couldn't import the nessary module to fix the issue")
+            self.fail("test_nested_asyncio couldn't import the necessary module to fix the issue")

@@ -7,7 +7,7 @@ from __future__ import annotations
 import unittest
 
 # Custom Library
-from AthenaLib.Types.Url import Url
+from AthenaLib.models.url import Url
 
 # Custom Packages
 from .TypesTesting import TypesTesting
@@ -34,7 +34,7 @@ class WebsiteUrl(TypesTesting):
         self.SubtestFunction(ValueType_, cases)
 
         casesOperations = (
-            # operation     oargs  okwargs    value,              kwargs   result,
+            # operation     oArgs  oKwargs    value,              kwargs   result,
             (repr,          (),     {},       ("github.com",),    {},      "Url(value='https://www.github.com/')"),
             (str,           (),     {},       ("github.com",),    {},      "https://www.github.com/"),
         )

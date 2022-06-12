@@ -7,7 +7,7 @@ import unittest
 # Custom Library
 
 # Custom Packages
-from AthenaLib.Split.Split import split_evenly, SplitError
+from AthenaLib.functions.Split.Split import split_evenly, SplitError
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------

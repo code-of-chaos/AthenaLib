@@ -2,7 +2,7 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-import asyncio
+import nest_asyncio
 
 # Custom Library
 
@@ -11,17 +11,6 @@ import asyncio
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def Timeout(max_time:int|float):
-    def decorator(fnc):
-        def wrapper(*args, **kwargs):
-            try:
-                return asyncio.run(
-                    asyncio.wait_for(
-                        fnc(*args, **kwargs),
-                        timeout=max_time
-                    )
-                )
-            except asyncio.exceptions.TimeoutError:
-                raise TimeoutError
-        return wrapper
-    return decorator
+def fix_nested_asyncio():
+    """Simple function to create nested asyncio loops"""
+    nest_asyncio.apply()
