@@ -2,7 +2,6 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-import nest_asyncio
 
 # Custom Library
 
@@ -13,4 +12,5 @@ import nest_asyncio
 # ----------------------------------------------------------------------------------------------------------------------
 def fix_nested_asyncio():
     """Simple function to create nested asyncio loops"""
+    import nest_asyncio
     nest_asyncio.apply()
