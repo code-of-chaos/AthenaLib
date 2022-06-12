@@ -4,7 +4,7 @@
 def info(*,to_str:bool=False) -> None|str:
     # bare minimum import
     from AthenaColor import ForeNest, StyleNest
-    from AthenaLib._version import _version
+    from AthenaLib._v import _version
 
     line = "-"*128
     title = ForeNest.SlateGray(f"""{line}
