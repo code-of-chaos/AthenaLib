@@ -8,7 +8,7 @@ from __future__ import annotations
 
 # Custom Packages
 import AthenaLib._info.formatting as F
-from AthenaLib._v import _version
+from AthenaLib._info._v import _version
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
