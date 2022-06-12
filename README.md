@@ -8,7 +8,7 @@
 #### Details and features 
 - A library of Python modules for Directive Athena related Packages
 - Used as a dependency on most, if not all, "*Athena...*" packages
-  - An excpetion to this rules is [AthenaColor](https://github.com/DirectiveAthena/AthenaColor) as this package is "dependency-less"
+  - An exception to these rules is [AthenaColor](https://github.com/DirectiveAthena/AthenaColor) as this package is "dependency-less"
 
 #### Python Version
 - Supported Python versions: **3.10**
