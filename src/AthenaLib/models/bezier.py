@@ -59,7 +59,7 @@ class CubicBezier:
         yield self.y2
 
     def export(self) -> tuple:
-        return self.x1,self.y1,self.x2,self.y2
+        return tuple(self)
 
     # ------------------------------------------------------------------------------------------------------------------
     # - math Operations -
