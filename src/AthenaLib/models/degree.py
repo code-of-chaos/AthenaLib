@@ -21,6 +21,8 @@ class Degree:
     # ------------------------------------------------------------------------------------------------------------------
     def __abs__(self):
         return self.__class__(value=abs(self.value))
+    def __round__(self, n=None):
+        return self.__class__(value=round(self.value, n))
     def __int__(self)-> int:
         return int(self.value)
     def __float__(self):
