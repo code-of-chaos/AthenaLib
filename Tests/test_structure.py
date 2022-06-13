@@ -2,19 +2,19 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
+from __future__ import annotations
 import unittest
+from typing import Any, Callable
 
 # Custom Library
-from AthenaLib.fixes.asyncio import fix_nested_asyncio
 
 # Custom Packages
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-    def test_nested_asyncio(self):
-        try:
-            fix_nested_asyncio()
-        except ImportError:
-            self.fail("test_nested_asyncio couldn't import the necessary module to fix the issue")
+class TestStructure(unittest.TestCase):
+    def subtest_multiple_cases(self, *cases:tuple[Any, Callable]):
+        for result, obj_creator in cases:
+            with self.subTest(result=result, obj_creator=obj_creator):
+                self.assertEqual(result, obj_creator())
