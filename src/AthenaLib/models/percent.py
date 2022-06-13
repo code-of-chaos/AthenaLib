@@ -32,8 +32,6 @@ class Percent:
         else:
             return NotImplemented
 
-    def __str__(self):
-        return f"{self.value}%"
     def __repr__(self) -> str:
         return f"Percent(value={self.value})"
     def __hash__(self):

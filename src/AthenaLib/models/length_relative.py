@@ -69,8 +69,6 @@ class RelativeLength(ABC):
         return hash(self.value)
 
     @abstractmethod
-    def __str__(self)->str:...
-    @abstractmethod
     def __repr__(self) -> str:...
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -151,57 +149,41 @@ class RelativeLength(ABC):
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ElementFontSize(RelativeLength):
-    def __str__(self):
-        return f"{self.value}em"
     def __repr__(self) -> str:
         return f"ElementFontSize(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ElementFontHeight(RelativeLength):
-    def __str__(self):
-        return f"{self.value}ex"
     def __repr__(self) -> str:
         return f"ElementFontHeight(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ZeroCharacterWidth(RelativeLength):
-    def __str__(self):
-        return f"{self.value}ch"
     def __repr__(self) -> str:
         return f"ZeroCharacterWidth(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class RootElementFontSize(RelativeLength):
-    def __str__(self):
-        return f"{self.value}rem"
     def __repr__(self) -> str:
         return f"RootElementFontSize(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ViewportWidthPercent(RelativeLength):
-    def __str__(self):
-        return f"{self.value}vw"
     def __repr__(self) -> str:
         return f"ViewportWidthPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ViewportHeightPercent(RelativeLength):
-    def __str__(self):
-        return f"{self.value}vh"
     def __repr__(self) -> str:
         return f"ViewportHeightPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ViewportSmallerPercent(RelativeLength):
-    def __str__(self):
-        return f"{self.value}vmin"
     def __repr__(self) -> str:
         return f"ViewportSmallerPercent(value={self.value})"
 
 # ----------------------------------------------------------------------------------------------------------------------
 class ViewportLargerPercent(RelativeLength):
-    def __str__(self):
-        return f"{self.value}vmax"
     def __repr__(self) -> str:
         return f"ViewportLargerPercent(value={self.value})"
 

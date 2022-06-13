@@ -111,8 +111,6 @@ class TimeValue(ABC):
         return type(self)(round(self.value, n))
 
     @abstractmethod
-    def __str__(self)->str:...
-    @abstractmethod
     def __repr__(self) -> str:...
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -193,26 +191,18 @@ class TimeValue(ABC):
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Hour(TimeValue):
-    def __str__(self):
-        return f"{self.value}h"
     def __repr__(self) -> str:
         return f"Hour(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Minute(TimeValue):
-    def __str__(self):
-        return f"{self.value}m"
     def __repr__(self) -> str:
         return f"Minute(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Second(TimeValue):
-    def __str__(self):
-        return f"{self.value}s"
     def __repr__(self) -> str:
         return f"Second(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class MilliSecond(TimeValue):
-    def __str__(self):
-        return f"{self.value}ms"
     def __repr__(self) -> str:
         return f"MilliSecond(value={self.value})"
 

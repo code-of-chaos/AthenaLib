@@ -95,9 +95,6 @@ class CubicBezier:
         return hash((self.x1,self.y1,self.x2,self.y2))
     def __repr__(self) -> str:
         return f"CubicBezier(x1={self.x1},y1={self.y1},x2={self.x2},y2={self.y2})"
-    def __str__(self):
-        # Written this was because of css output
-        return f"cubic-bezier({self.x1}, {self.y1}, {self.x2}, {self.y2})"
     def __round__(self, n=None):
         return type(self)(*(round(i, n) for i in (self.x1, self.y1, self.x2, self.y2)))
 
