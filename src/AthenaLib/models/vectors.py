@@ -60,8 +60,8 @@ class Vector2D:
         return self.__class__(round(self.x, n), round(self.y, n))
 
     def __iter__(self):
-        yield self.x
-        yield self.y
+        for n in (self.x, self.y):
+            yield n
 
     def export(self) -> tuple:
         return tuple(self)
@@ -90,8 +90,8 @@ class Vector3D:
         return self.__class__(round(self.x, n), round(self.y, n), abs(self.z))
 
     def __iter__(self):
-        yield self.x
-        yield self.y
+        for n in (self.x, self.y, self.z):
+            yield n
 
     def export(self) -> tuple:
         return tuple(self)
