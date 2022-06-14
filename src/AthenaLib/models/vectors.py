@@ -34,7 +34,7 @@ class Vector1D:
     def __iter__(self):
         yield self.x
 
-    def export(self) -> tuple:
+    def export(self) -> tuple: # remains present for some legacy code
         return tuple(self)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -54,7 +54,7 @@ class Vector2D:
     # - cast dunders -
     # ------------------------------------------------------------------------------------------------------------------
     def __abs__(self) -> Vector2D:
-        return self.__class__(abs(self.x), abs(self.Y))
+        return self.__class__(abs(self.x), abs(self.y))
 
     def __round__(self, n=None) -> Vector2D:
         return self.__class__(round(self.x, n), round(self.y, n))
@@ -63,7 +63,7 @@ class Vector2D:
         for n in (self.x, self.y):
             yield n
 
-    def export(self) -> tuple:
+    def export(self) -> tuple: # remains present for some legacy code
         return tuple(self)
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -87,13 +87,13 @@ class Vector3D:
         return self.__class__(abs(self.x), abs(self.y), abs(self.z))
 
     def __round__(self, n=None) -> Vector3D:
-        return self.__class__(round(self.x, n), round(self.y, n), abs(self.z))
+        return self.__class__(round(self.x, n), round(self.y, n), abs(self.z, n))
 
     def __iter__(self):
         for n in (self.x, self.y, self.z):
             yield n
 
-    def export(self) -> tuple:
+    def export(self) -> tuple: # remains present for some legacy code
         return tuple(self)
 
     # ------------------------------------------------------------------------------------------------------------------
