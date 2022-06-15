@@ -2,19 +2,29 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
-import unittest
+from __future__ import annotations
 
 # Custom Library
-from AthenaLib.fixes.asyncio import fix_nested_asyncio
+from AthenaLib.models import *
 
 # Custom Packages
+from Tests.test_structure import TestStructure
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-class Test(unittest.TestCase):
-    def test_nested_asyncio(self):
-        try:
-            fix_nested_asyncio()
-        except ImportError:
-            self.fail("test_nested_asyncio couldn't import the necessary module to fix the issue")
+class TestVectors(TestStructure):
+    def test_Vector1D(self):
+        self.subtest_multiple_cases(
+            ((1,),lambda : Vector1D(1).export()),
+        )
+
+    def test_Vector2D(self):
+        self.subtest_multiple_cases(
+            ((1,2),lambda : Vector2D(1,2).export()),
+        )
+
+    def test_Vector3D(self):
+        self.subtest_multiple_cases(
+            ((1,2,3),lambda : Vector3D(1,2,3).export()),
+        )

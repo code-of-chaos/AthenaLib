@@ -10,25 +10,93 @@ from dataclasses import dataclass
 # Custom Packages
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - Code -
+# - Vector 1D -
 # ----------------------------------------------------------------------------------------------------------------------
-@dataclass(unsafe_hash=True, slots=True)
+@dataclass(slots=True, eq=True, order=True)
 class Vector1D:
     x:int|float = 0.
 
+    # ------------------------------------------------------------------------------------------------------------------
+    # - cast dunders -
+    # ------------------------------------------------------------------------------------------------------------------
+    def __abs__(self) -> Vector1D:
+        return self.__class__(abs(self.x))
+
+    def __int__(self) -> int:
+        return int(self.x)
+
+    def __float__(self) -> float:
+        return float(self.x)
+
+    def __round__(self, n=None):
+        return self.__class__(round(self.x, n))
+
+    def __iter__(self):
+        yield self.x
+
+    def export(self) -> tuple: # remains present for some legacy code
+        return tuple(self)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # - math dunders -
+    # ------------------------------------------------------------------------------------------------------------------
     # todo math
 
-@dataclass(unsafe_hash=True, slots=True)
+# ----------------------------------------------------------------------------------------------------------------------
+# - Vector 2D -
+# ----------------------------------------------------------------------------------------------------------------------
+@dataclass(slots=True, eq=True, order=True)
 class Vector2D:
     x:int|float = 0.
     y:int|float = 0.
 
+    # ------------------------------------------------------------------------------------------------------------------
+    # - cast dunders -
+    # ------------------------------------------------------------------------------------------------------------------
+    def __abs__(self) -> Vector2D:
+        return self.__class__(abs(self.x), abs(self.y))
+
+    def __round__(self, n=None) -> Vector2D:
+        return self.__class__(round(self.x, n), round(self.y, n))
+
+    def __iter__(self):
+        for n in (self.x, self.y):
+            yield n
+
+    def export(self) -> tuple: # remains present for some legacy code
+        return tuple(self)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # - math dunders -
+    # ------------------------------------------------------------------------------------------------------------------
     # todo math
 
-@dataclass(unsafe_hash=True, slots=True)
+# ----------------------------------------------------------------------------------------------------------------------
+# - Vector 3D -
+# ----------------------------------------------------------------------------------------------------------------------
+@dataclass(slots=True, eq=True, order=True)
 class Vector3D:
     x:int|float = 0.
     y:int|float = 0.
     z:int|float = 0.
 
+    # ------------------------------------------------------------------------------------------------------------------
+    # - cast dunders -
+    # ------------------------------------------------------------------------------------------------------------------
+    def __abs__(self) -> Vector3D:
+        return self.__class__(abs(self.x), abs(self.y), abs(self.z))
+
+    def __round__(self, n=None) -> Vector3D:
+        return self.__class__(round(self.x, n), round(self.y, n), abs(self.z, n))
+
+    def __iter__(self):
+        for n in (self.x, self.y, self.z):
+            yield n
+
+    def export(self) -> tuple: # remains present for some legacy code
+        return tuple(self)
+
+    # ------------------------------------------------------------------------------------------------------------------
+    # - math dunders -
+    # ------------------------------------------------------------------------------------------------------------------
     # todo math

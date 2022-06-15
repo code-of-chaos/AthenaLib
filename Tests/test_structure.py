@@ -2,6 +2,9 @@
 # - Package Imports -
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
+from __future__ import annotations
+import unittest
+from typing import Any, Callable
 
 # Custom Library
 
@@ -10,10 +13,8 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def fix_nested_asyncio():
-    """Simple function to create nested asyncio loops"""
-    try:
-        import nest_asyncio
-        nest_asyncio.apply()
-    except ImportError:
-        raise ImportError("nest-asyncio package has to be installed for this to work")
+class TestStructure(unittest.TestCase):
+    def subtest_multiple_cases(self, *cases:tuple[Any, Callable]):
+        for result, obj_creator in cases:
+            with self.subTest(result=result, obj_creator=obj_creator):
+                self.assertEqual(result, obj_creator())
