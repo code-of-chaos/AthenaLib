@@ -12,7 +12,11 @@ from AthenaLib.models.time import Second, Minute, Hour
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def convert_time_to_seconds(time:Second|Minute|Hour, to_int:bool=False) -> Second|int:
+def convert_time_to_seconds(time:int|Second|Minute|Hour, to_int:bool=False) -> Second|int:
+    if isinstance(time, int):
+        if to_int:
+            return time
+        return Second(time)
     if isinstance(time, Second):
         if to_int:
             return int(time)
