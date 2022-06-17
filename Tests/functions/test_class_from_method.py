@@ -20,9 +20,6 @@ class A:
     def a(self):
         pass
 
-    @class_from_method.class_from_method_decorator
-    def b(self):
-        return self.b_str
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
@@ -48,15 +45,4 @@ class TestClassFromMethod(TestStructure):
         )
         self.assertIs(
             A, class_from_method.get_class_from_method(A.a)
-        )
-
-    def test_get_class_from_method_decorator(self):
-        self.assertIs(
-            A, A.b.owner
-        )
-        self.assertIs(
-            A, A().b.owner
-        )
-        self.assertEqual(
-            "b has been called", A().b()
         )

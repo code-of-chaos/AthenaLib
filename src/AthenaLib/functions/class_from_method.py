@@ -34,15 +34,3 @@ def get_class_from_method(meth) -> None|type:
         return unbound_method
     # the function below already either returns a None value or the class
     return get_class_from_unbound_method(meth)
-
-class class_from_method_decorator:
-    fnc: Callable
-    owner: type
-    def __init__(self, fnc):
-        self.fnc = fnc
-
-    def __set_name__(self, owner, name):
-        self.owner:type = owner
-
-    def __call__(self, *args, **kwargs):
-        return self.fnc(*args, **kwargs)
