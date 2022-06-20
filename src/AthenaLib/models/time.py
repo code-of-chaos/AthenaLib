@@ -14,7 +14,7 @@ from abc import ABC, abstractmethod
 # ----------------------------------------------------------------------------------------------------------------------
 __all__=[
     "Minute", "Second", "MilliSecond", "Hour",
-    "timeConversion"
+    "timeConversion", "TimeValue"
 ]
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -111,6 +111,9 @@ class TimeValue(ABC):
         return type(self)(round(self.value, n))
 
     @abstractmethod
+    def to_int_as_seconds(self):...
+
+    @abstractmethod
     def __repr__(self) -> str:...
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -191,18 +194,26 @@ class TimeValue(ABC):
 
 # ----------------------------------------------------------------------------------------------------------------------
 class Hour(TimeValue):
+    def to_int_as_seconds(self) -> int:
+        return self.value * 60 * 60
     def __repr__(self) -> str:
         return f"Hour(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Minute(TimeValue):
+    def to_int_as_seconds(self) -> int:
+        return self.value * 60
     def __repr__(self) -> str:
         return f"Minute(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class Second(TimeValue):
+    def to_int_as_seconds(self) -> int:
+        return int(self.value)
     def __repr__(self) -> str:
         return f"Second(value={self.value})"
 # ----------------------------------------------------------------------------------------------------------------------
 class MilliSecond(TimeValue):
+    def to_int_as_seconds(self) -> int:
+        return round(self.value / 1000)
     def __repr__(self) -> str:
         return f"MilliSecond(value={self.value})"
 
