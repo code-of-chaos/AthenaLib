@@ -12,9 +12,7 @@ from dataclasses import dataclass
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-@dataclass(
-    slots=True
-)
+@dataclass(slots=True, unsafe_hash=True, eq=True)
 class Version:
     """
     A class to hold a standardized version format.
