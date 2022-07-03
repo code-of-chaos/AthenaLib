@@ -17,3 +17,5 @@ from AthenaLib.models.time import (
 from AthenaLib.models.url import Url
 from AthenaLib.models.vectors import Vector1D, Vector2D, Vector3D
 from AthenaLib.models.version import Version
+
+from AthenaLib.models.html import HTMLElement
