@@ -5,8 +5,8 @@
 from __future__ import annotations
 
 # Custom Library
-from AthenaLib.models import HTMLElement
-import AthenaLib.models.html as HTMLElementLib
+from AthenaLib.HTML.models.html import HTMLElement
+import AthenaLib.HTML.models.html_library as HTMLElementLib
 
 # Custom Packages
 from Tests.test_structure import TestStructure
@@ -59,11 +59,20 @@ class TestHTML(TestStructure):
     def test_to_dict(self):
         self.assertEqual(
             {
+                'accesskey': False,
                 'classes': ['test', 'test2'],
+                'contenteditable': False,
+                'dir': False,
+                'draggable': False,
+                'hidden': False,
                 'id': 'test',
+                'lang': False,
                 'name': 'span',
+                'spellcheck': False,
                 'style': 'color:red;',
+                'tabindex': False,
                 'title': False,
+                'translate': False,
                 'wraps': []
             },
             HTMLElement(name="span", classes=["test", "test2"], id_str="test", style="color:red;").to_dict()
