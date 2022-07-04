@@ -1,3 +1,4 @@
+.viewer_requests/
 .idea/
 .run/
 
@@ -131,3 +132,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /OutputLogs/
+/viewer_resquests/
