@@ -4,6 +4,7 @@
 # General Packages
 from __future__ import annotations
 from dataclasses import dataclass
+from typing import Any
 
 # Custom Library
 
@@ -984,3 +985,130 @@ class Wbr(HTMLElement):
 
     def __init__(self, *wraps, **kwargs):
         super(Wbr, self).__init__(*wraps,name=Wbr.name,**kwargs)
+
+# ----------------------------------------------------------------------------------------------------------------------
+# - Pseudo elements -
+# ----------------------------------------------------------------------------------------------------------------------
+class _Pseudo(HTMLElement):
+    def __init__(self, *wraps, **kwargs):
+        super().__init__(*wraps,name=self.name,**kwargs)
+
+class _PseudoWithValue(_Pseudo):
+    value:Any
+
+    def __init__(self, value,*wraps, **kwargs):
+        self.value=value
+        super().__init__(*wraps,**kwargs)
+
+    def to_tag(self):
+        return None
+    def to_tag_end(self):
+        return None
+    def __str__(self):
+        return None
+
+    def to_css_selector(self, full: bool = False) -> str:
+        classes = f".{'.'.join(self.classes)}" if self.classes else ""
+        id_str = f"#{self.id}" if self.id else ""
+
+        attr: list[str] = []
+        for attr_name, attr_value in self.__dict__.items():
+            # skip any attributes which should not be present in the tag of the element
+            if attr_value and attr_name not in ("name", "classes", "wraps"):
+                attr.append(f"{attr_name}={enclose_double_quote(attr_value)}")
+
+        if isinstance(self.value,HTMLElement):
+            value = self.value.to_css_selector()
+        elif isinstance(self.value, type) and issubclass(self.value, HTMLElement):
+            value = self.value().to_css_selector()
+        else:
+            value=str(self.value)
+
+        if not full or not attr:
+            return f"{classes}{id_str}{self.name}({value})"
+        else:
+            return f"{classes}{id_str}[{','.join(attr)}]{self.name}({value})"
+
+
+class PseudoActive(_Pseudo):
+    name = ":active"
+class PseudoAfter(_Pseudo):
+    name = "::after"
+class PseudoBefore(_Pseudo):
+    name = "::before"
+class PseudoChecked(_Pseudo):
+    name = ":checked"
+class PseudoDefault(_Pseudo):
+    name = ":default"
+class PseudoDisabled(_Pseudo):
+    name = ":disabled"
+class PseudoEmpty(_Pseudo):
+    name = ":empty"
+class PseudoEnabled(_Pseudo):
+    name = ":enabled"
+class PseudoFirstChild(_Pseudo):
+    name = ":first-child"
+class PseudoFirstLetter(_Pseudo):
+    name = ":first-letter"
+class PseudoFirstLine(_Pseudo):
+    name = "::first-line"
+class PseudoFirstOfType(_Pseudo):
+    name = ":first-of-type"
+class PseudoFocus(_Pseudo):
+    name = ":focus"
+class PseudoFullscreen(_Pseudo):
+    name = ":fullscreen"
+class PseudoHover(_Pseudo):
+    name = ":hover"
+class PseudoInRange(_Pseudo):
+    name = ":in-range"
+class PseudoIndeterminate(_Pseudo):
+    name = ":indeterminate"
+class PseudoInvalid(_Pseudo):
+    name = ":invalid"
+class PseudoLang(_PseudoWithValue):
+    name = ":lang"
+class PseudoLastChild(_Pseudo):
+    name = ":last-child"
+class PseudoLastOfType(_Pseudo):
+    name = ":last-of-type"
+class PseudoLink(_Pseudo):
+    name = ":link"
+class PseudoMarker(_Pseudo):
+    name = "::marker"
+class PseudoNot(_PseudoWithValue):
+    name = ":not"
+class PseudoNthChild(_PseudoWithValue):
+    name = ":nth-child"
+class PseudoNthLastChild(_PseudoWithValue):
+    name = ":nth-last-child"
+class PseudoNthLastOfType(_PseudoWithValue):
+    name = ":nth-last-of-child"
+class PseudoNthOfType(_PseudoWithValue):
+    name = ":nth-of-child"
+class PseudoOnlyOfType(_Pseudo):
+    name = ":only-of-type"
+class PseudoOnlyChild(_Pseudo):
+    name = ":only-child"
+class PseudoOptional(_Pseudo):
+    name = ":optional"
+class PseudoOutOfRange(_Pseudo):
+    name = ":out-of-range"
+class PseudoPlaceholder(_Pseudo):
+    name = "::placeholder"
+class PseudoReadOnly(_Pseudo):
+    name = ":read-only"
+class PseudoReadWrite(_Pseudo):
+    name = ":read-write"
+class PseudoRequired(_Pseudo):
+    name = ":required"
+class PseudoRoot(_Pseudo):
+    name = ":root"
+class PseudoSelection(_Pseudo):
+    name = "::selection"
+class PseudoTarget(_Pseudo):
+    name = ":target"
+class PseudoValid(_Pseudo):
+    name = ":valid"
+class PseudoVisited(_Pseudo):
+    name = ":visited"

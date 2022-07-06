@@ -26,7 +26,7 @@ class HTMLElement:
     - name:str -> HTML element name, like "p"/ "span"/ ...
     - *wrap:list[HTMLElement|str|int|...] -> other objects the element wraps.
     - accesskey:str
-    - classes:list[str]
+    - classes:tuple[str]
     - contenteditable:str
     - dir:str
     - draggable:str
@@ -40,11 +40,11 @@ class HTMLElement:
     - translate:str
     """
     name:str
-    wraps:list[HTMLElement|str|int|...]
+    wraps:tuple[HTMLElement|str|int|...]
 
     # default attributes
     accesskey:str
-    classes:list[str]
+    classes:tuple[str,...]
     contenteditable:str
     dir:str
     draggable:str
@@ -64,7 +64,7 @@ class HTMLElement:
             name: str,
 
             access_key:str=False,
-            classes:list[str]=False,
+            classes:tuple[str,...]=False,
             content_editable:str=False,
             direction:str=False,
             draggable:str=False,
@@ -78,11 +78,11 @@ class HTMLElement:
             translate:str=False,
         ):
         self.name = type_check_error(name, str)
-        self.wraps = list(wrap)
+        self.wraps = wrap
 
         # all below can have a truthy FALSE value
         self.accesskey = type_check_error(access_key, str) if access_key else False
-        self.classes = type_check_error(classes, list) if classes else False
+        self.classes = type_check_error(classes, tuple) if classes else False
         self.contenteditable = type_check_error(content_editable, str) if content_editable else False
         self.dir = type_check_error(direction, str) if direction else False
         self.draggable = type_check_error(draggable, str) if draggable else False
