@@ -12,37 +12,78 @@ import asyncio
 # Custom Packages
 
 # ----------------------------------------------------------------------------------------------------------------------
+# - Support Code -
+# ----------------------------------------------------------------------------------------------------------------------
+async def _request(
+        headers:dict, url:str, data:bytes=None, query_parameters:dict=None,
+        *, loop:asyncio.AbstractEventLoop=None, method:str
+):
+    if loop is None:
+        loop = asyncio.get_running_loop()
+
+    # assemble the request
+    req = urllib.request.Request(
+        f"{url}?{urllib.parse.urlencode(query_parameters)}" if query_parameters is not None or query_parameters else url,
+        headers=headers,
+        method=method,
+    )
+
+    # run the request
+    return await loop.run_in_executor(
+        executor=None,
+        func=lambda: urllib.request.urlopen(req,data=data)
+    )
+# ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-async def get(headers:dict,url:str,query_parameters:dict=None,*, loop:asyncio.AbstractEventLoop=None):
-    if loop is None:
-        loop = asyncio.get_running_loop()
-
-    # assemble the request
-    req = urllib.request.Request(
-        f"{url}?{urllib.parse.urlencode(query_parameters)}" if query_parameters is not None else url,
+async def get(
+        headers:dict,url:str,data:bytes=None,query_parameters:dict=None,
+        *,loop:asyncio.AbstractEventLoop=None
+):
+    return await _request(
         headers=headers,
+        url=url,
+        data=data,
+        query_parameters=query_parameters,
+        loop=loop,
+        method="GET"
     )
 
-    # run the request
-    return await loop.run_in_executor(
-        executor=None,
-        func=lambda: urllib.request.urlopen(req)
-    )
-
-async def post(headers:dict,url:str,data:bytes,query_parameters:dict=None, *, loop:asyncio.AbstractEventLoop=None):
-    if loop is None:
-        loop = asyncio.get_running_loop()
-
-    # assemble the request
-    req = urllib.request.Request(
-        f"{url}?{urllib.parse.urlencode(query_parameters)}" if query_parameters is not None else url,
+async def post(
+        headers:dict,url:str,data:bytes=None,query_parameters:dict=None,
+        *, loop:asyncio.AbstractEventLoop=None
+):
+    return await _request(
         headers=headers,
-        method="POST",
+        url=url,
+        data=data,
+        query_parameters=query_parameters,
+        loop=loop,
+        method="POST"
     )
 
-    # run the request
-    return await loop.run_in_executor(
-        executor=None,
-        func=lambda: urllib.request.urlopen(req,data)
+async def patch(
+        headers:dict,url:str,data:bytes=None,query_parameters:dict=None,
+        *,loop:asyncio.AbstractEventLoop=None
+):
+    return await _request(
+        headers=headers,
+        url=url,
+        data=data,
+        query_parameters=query_parameters,
+        loop=loop,
+        method="PATCH"
+    )
+
+async def delete(
+        headers:dict,url:str,data:bytes=None,query_parameters:dict=None,
+        *, loop:asyncio.AbstractEventLoop=None
+):
+    return await _request(
+        headers=headers,
+        url=url,
+        data=data,
+        query_parameters=query_parameters,
+        loop=loop,
+        method="DELETE"
     )
