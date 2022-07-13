@@ -37,7 +37,7 @@ async def post(headers:dict,url:str,data:bytes,query_parameters:dict=None, *, lo
     # assemble the request
     req = urllib.request.Request(
         f"{url}?{urllib.parse.urlencode(query_parameters)}" if query_parameters is not None else url,
-        header=headers,
+        headers=headers,
         method="POST",
     )
 
