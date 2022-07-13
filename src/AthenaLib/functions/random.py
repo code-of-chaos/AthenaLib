@@ -4,6 +4,7 @@
 # General Packages
 from __future__ import annotations
 import random
+import typing
 
 # Custom Library
 
@@ -40,3 +41,6 @@ def random_int_no_duplicates(start:int, end:int, *, return_amount:int=None, end_
         # remove the actual result from the choices
         #   so that in the following iteration of the for loop the sample result can't be yield again
         choices.remove(result)
+
+def random_bool(probability:float=0.5) -> bool:
+    return random.random() < probability
