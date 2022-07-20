@@ -87,3 +87,16 @@ async def delete(
         loop=loop,
         method="DELETE"
     )
+
+async def put(
+        headers:dict,url:str,data:bytes=None,query_parameters:dict=None,
+        *, loop:asyncio.AbstractEventLoop=None
+):
+    return await _request(
+        headers=headers,
+        url=url,
+        data=data,
+        query_parameters=query_parameters,
+        loop=loop,
+        method="PUT"
+    )
