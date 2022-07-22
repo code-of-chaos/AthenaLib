@@ -101,7 +101,7 @@ class TestHTML(TestStructure):
     def test_rule_001(self):
         selection = (
             CSSSelection(
-                (HTMLElementLib.P(classes=("test",)),)
+                HTMLElementLib.P(classes=("test",))
             ),
         )
         properties = (
@@ -110,16 +110,16 @@ class TestHTML(TestStructure):
         )
 
         self.assertEqual(
-            "p.test{color: red;float: right;}",
+            "p.test {color: red;float: right;}",
             CSSRule(selection, properties).to_text(indent=False, indentation=0)
         )
 
     def test_rule_002(self):
         selection = (
             CSSSelection(
-                (HTMLElementLib.P(classes=("test",)),
-                 HTMLElementLib.H1()),
-                type=CSSSelectionType.family
+                HTMLElementLib.P(classes=("test",)),
+                HTMLElementLib.H1(),
+                selector_type=CSSSelectionType.family
             ),
         )
         properties = (
@@ -128,21 +128,21 @@ class TestHTML(TestStructure):
         )
 
         self.assertEqual(
-            "p.test>h1{color: red;float: right;}",
+            "p.test>h1 {color: red;float: right;}",
             CSSRule(selection, properties).to_text(indent=False, indentation=0)
         )
 
     def test_rule_003(self):
         selection = (
             CSSSelection(
-                (HTMLElementLib.P(classes=("test",)),
-                 HTMLElementLib.H1()),
-                type=CSSSelectionType.family
+                HTMLElementLib.P(classes=("test",)),
+                HTMLElementLib.H1(),
+                selector_type=CSSSelectionType.family
             ),
             CSSSelection(
-                (HTMLElementLib.B(classes=("test",)),
-                 HTMLElementLib.Span()),
-                type=CSSSelectionType.inside
+                HTMLElementLib.B(classes=("test",)),
+                HTMLElementLib.Span(),
+                selector_type=CSSSelectionType.inside
             ),
         )
         properties = (
@@ -151,28 +151,28 @@ class TestHTML(TestStructure):
         )
 
         self.assertEqual(
-            "p.test>h1,b.test span{color: red;float: right;}",
+            "p.test>h1,b.test span {color: red;float: right;}",
             CSSRule(selection, properties).to_text(indent=False, indentation=0)
         )
 
     def test_rule_004(self):
         self.assertEqual(
 """p.test>h1,
-b.test span{
+b.test span {
     color: red;
     float: right;
 }""",
             CSSRule(
                 selections=(
                     CSSSelection(
-                        (HTMLElementLib.P(classes=("test",)),
-                         HTMLElementLib.H1()),
-                        type=CSSSelectionType.family
+                        HTMLElementLib.P(classes=("test",)),
+                        HTMLElementLib.H1(),
+                        selector_type=CSSSelectionType.family
                     ),
                     CSSSelection(
-                        (HTMLElementLib.B(classes=("test",)),
-                         HTMLElementLib.Span()),
-                        type=CSSSelectionType.inside
+                        HTMLElementLib.B(classes=("test",)),
+                        HTMLElementLib.Span(),
+                        selector_type=CSSSelectionType.inside
                     ),
                 ), properties=(
                     CSSProperty(name="color", value="red"),

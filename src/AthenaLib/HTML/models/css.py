@@ -4,10 +4,10 @@
 # General Packages
 from __future__ import annotations
 from typing import Any
-import enum
 from dataclasses import dataclass
 
 # Custom Library
+from AthenaColor import HEX, RGB, RGBA
 
 # Custom Packages
 from AthenaLib.HTML.models.html import HTMLElement
@@ -22,35 +22,58 @@ class CSSProperty:
     name:str
     value:Any
 
-    def __str__(self):
-        return f"{self.name}: {self.value};"
+    def __str__(self) -> str:
+        # proper parsing of values which inherit from AthenaLib components
+        match self.value:
+            case HEX():
+                value = f"#{self.value}"
+            case RGB(r=r,g=g,b=b):
+                value = f"rgb({r},{g},{b})"
+            case RGBA(r=r,g=g,b=b, a=a):
+                value = f"rgba({r},{g},{b},{a})"
+            case _:
+                value = str(self.value)
 
-@dataclass(slots=True, unsafe_hash=True)
+        return f"{self.name}: {value};"
+
+@dataclass(slots=True, unsafe_hash=True, init=False)
 class CSSSelection:
     selectors:tuple[HTMLElement,...]
     type:CSSSelectionType=CSSSelectionType.default
 
-    def __str__(self):
+    def __init__(self, *selectors:HTMLElement, selector_type:CSSSelectionType=CSSSelectionType.default):
+        self.selectors = selectors
+        self.type = selector_type
+
+    def __str__(self) -> str:
         return self.type.value.join(s.to_css_selector() for s in self.selectors)
 
-@dataclass(slots=True, unsafe_hash=True)
+@dataclass(slots=True, unsafe_hash=True, init=False)
 class CSSRule:
     selections: tuple[CSSSelection,...]
     properties: tuple[CSSProperty,...]
 
-    def to_text(self,*,indent:bool=True, indentation:int=4):
+    def __init__(
+            self,
+            selections:tuple[CSSSelection,...]|CSSSelection,
+            properties:tuple[CSSProperty,...]|CSSProperty
+    ):
+        self.selections = (selections,) if isinstance(selections, CSSSelection) else selections
+        self.properties = (properties,) if isinstance(properties, CSSProperty) else properties
+
+    def to_text(self,*,indent:bool=True, indentation:int=4) -> str:
         new_line = NEW_LINE if indent else NOTHING
         indent_str = f'{NEW_LINE}{" "*indentation}' if indent else NOTHING
 
         properties = f'{indent_str if indent else NOTHING}{indent_str.join(str(p) for p in self.properties)}{new_line}'
         selections = f'{f",{new_line if indent else NOTHING}".join(str(s) for s in self.selections)}'
-        return f"{selections}{{{properties}}}"
+        return f"{selections} {{{properties}}}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.to_text(indent=True, indentation=4)
 
 @dataclass(slots=True, unsafe_hash=True)
 class CSSComment:
     text:str
-    def __str__(self):
-        return f"/*{self.text}*/"
+    def __str__(self) -> str:
+        return f"/* {self.text} */"

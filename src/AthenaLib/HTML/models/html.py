@@ -64,7 +64,7 @@ class HTMLElement:
             name: str,
 
             access_key:str=False,
-            classes:tuple[str,...]=False,
+            classes:tuple[str,...]|str=False,
             content_editable:str=False,
             direction:str=False,
             draggable:str=False,
@@ -82,7 +82,12 @@ class HTMLElement:
 
         # all below can have a truthy FALSE value
         self.accesskey = type_check_error(access_key, str) if access_key else False
-        self.classes = type_check_error(classes, tuple) if classes else False
+        if isinstance(classes, str):
+            self.classes = (classes,)
+        elif isinstance(classes, tuple):
+            self.classes = classes
+        else:
+            self.classes = type_check_error(classes, tuple|str) if content_editable else False
         self.contenteditable = type_check_error(content_editable, str) if content_editable else False
         self.dir = type_check_error(direction, str) if direction else False
         self.draggable = type_check_error(draggable, str) if draggable else False
