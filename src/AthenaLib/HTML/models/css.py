@@ -48,3 +48,9 @@ class CSSRule:
 
     def __str__(self):
         return self.to_text(indent=True, indentation=4)
+
+@dataclass(slots=True, unsafe_hash=True)
+class CSSComment:
+    text:str
+    def __str__(self):
+        return f"/*{self.text}*/"
