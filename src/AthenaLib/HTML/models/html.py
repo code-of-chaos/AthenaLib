@@ -61,8 +61,7 @@ class HTMLElement:
     def __init__(
             self,
             *wrap:Any,
-            name: str,
-
+            name:str=False,
             access_key:str=False,
             classes:tuple[str,...]|str=False,
             content_editable:str=False,
@@ -77,7 +76,7 @@ class HTMLElement:
             title:str=False,
             translate:str=False,
         ):
-        self.name = type_check_error(name, str)
+        self.name = type_check_error(name, str) if name else False
         self.wraps = wrap
 
         # all below can have a truthy FALSE value
@@ -105,6 +104,8 @@ class HTMLElement:
     # - Casting -
     # ------------------------------------------------------------------------------------------------------------------
     def _to_tag_generator(self) -> str:
+        if not self.name:
+            yield ValueError("no name was set for the tag")
         yield self.name # always yield an element name
         if self.classes:
             yield f"class={enclose_double_quote(' '.join(self.classes))}"
@@ -120,6 +121,8 @@ class HTMLElement:
         return f"<{' '.join(self._to_tag_generator())}>"
 
     def to_tag_end(self) -> str:
+        if not self.name:
+            yield ValueError("no name was set for the tag")
         """Returns the end tag of the HTML element"""
         return f"</{self.name}>"
 
@@ -138,9 +141,9 @@ class HTMLElement:
                 attr.append(f"{attr_name}={enclose_double_quote(attr_value)}")
 
         if not full or not attr:
-            return f"{self.name}{classes}{id_str}"
+            return f"{self.name if self.name else ''}{classes}{id_str}"
         else:
-            return f"{self.name}{classes}{id_str}[{','.join(attr)}]"
+            return f"{self.name if self.name else ''}{classes}{id_str}[{','.join(attr)}]"
 
     def __str__(self):
         """Returns a completely wrapped html element, meaning it has with all the content within it, and it's end tag"""

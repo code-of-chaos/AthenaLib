@@ -52,21 +52,28 @@ class CSSSelection:
 class CSSRule:
     selections: tuple[CSSSelection,...]
     properties: tuple[CSSProperty,...]
+    force_one_line:bool=False
 
     def __init__(
             self,
             selections:tuple[CSSSelection,...]|CSSSelection,
-            properties:tuple[CSSProperty,...]|CSSProperty
+            properties:tuple[CSSProperty,...]|CSSProperty,
+            force_one_line:bool=False
     ):
         self.selections = (selections,) if isinstance(selections, CSSSelection) else selections
         self.properties = (properties,) if isinstance(properties, CSSProperty) else properties
+        self.force_one_line = force_one_line
 
     def to_text(self,*,indent:bool=True, indentation:int=4) -> str:
         new_line = NEW_LINE if indent else NOTHING
-        indent_str = f'{NEW_LINE}{" "*indentation}' if indent else NOTHING
+        indent_str = f'{NEW_LINE}{" " * indentation}'
 
-        properties = f'{indent_str if indent else NOTHING}{indent_str.join(str(p) for p in self.properties)}{new_line}'
-        selections = f'{f",{new_line if indent else NOTHING}".join(str(s) for s in self.selections)}'
+        if self.force_one_line or not indent:
+            properties = f'{indent_str.join(str(p) for p in self.properties)} '
+            selections = ",".join(str(s) for s in self.selections)
+        else:
+            properties = f'{indent_str}{indent_str.join(str(p) for p in self.properties)}{new_line}'
+            selections = f'{f",{new_line}".join(str(s) for s in self.selections)}'
         return f"{selections} {{{properties}}}"
 
     def __str__(self) -> str:
