@@ -82,11 +82,11 @@ class HTMLElement:
         # all below can have a truthy FALSE value
         self.accesskey = type_check_error(access_key, str) if access_key else False
         if isinstance(classes, str):
-            self.classes = (classes,)
+            self.classes = (classes,) if classes else False
         elif isinstance(classes, tuple):
-            self.classes = classes
+            self.classes = tuple(cls for cls in classes if cls) if classes else False
         else:
-            self.classes = type_check_error(classes, tuple|str) if content_editable else False
+            self.classes = type_check_error(classes, tuple|str) if classes else False
         self.contenteditable = type_check_error(content_editable, str) if content_editable else False
         self.dir = type_check_error(direction, str) if direction else False
         self.draggable = type_check_error(draggable, str) if draggable else False
