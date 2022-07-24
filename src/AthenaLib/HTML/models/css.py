@@ -69,7 +69,7 @@ class CSSRule:
         indent_str = f'{NEW_LINE}{" " * indentation}'
 
         if self.force_one_line or not indent:
-            properties = f'{indent_str.join(str(p) for p in self.properties)} '
+            properties = NOTHING.join(str(p) for p in self.properties)
             selections = ",".join(str(s) for s in self.selections)
         else:
             properties = f'{indent_str}{indent_str.join(str(p) for p in self.properties)}{new_line}'
