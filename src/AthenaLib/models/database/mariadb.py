@@ -20,7 +20,7 @@ class DatabaseMariaDB:
     port:int
     pool:aiomysql.Pool = field(init=False)
 
-    async def connect(self,user:str,password:str, loop=asyncio.AbstractEventLoop):
+    async def connect(self,user:str,password:str, loop:asyncio.AbstractEventLoop):
         self.pool = await aiomysql.create_pool(
             host=self.host,
             port=self.port,
@@ -31,8 +31,8 @@ class DatabaseMariaDB:
 
     async def acquire_cursor(self) -> aiomysql.Cursor:
         async with self.pool.acquire() as conn:
-            async with conn.cursor() as cursor:
-                yield cursor
+            async with conn.cursor() as cursor: #type: aiomysql.Cursor
+                return cursor
 
     async def close(self):
         self.pool.close()
