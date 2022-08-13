@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 @dataclass(slots=True)
-class DatabaseMariaDB:
+class AsyncDatabaseMariaDB:
     host:str
     port:int
     pool:aiomysql.Pool = field(init=False)
