@@ -11,6 +11,8 @@ from __future__ import annotations
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-NEW_LINE = "\n"
-NOTHING = ""
-TRUTHY = {"1", "True", "true", "TRUE", 1}
+def append_or_new_list_to_mapping(mapping:dict, key, value):
+    if key not in mapping:
+        mapping[key] = [value]
+    else:
+        mapping[key].append(value)
