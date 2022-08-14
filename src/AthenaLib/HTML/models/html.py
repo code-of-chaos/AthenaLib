@@ -105,7 +105,7 @@ class HTMLElement:
     # ------------------------------------------------------------------------------------------------------------------
     def _to_tag_generator(self) -> str:
         if not self.name:
-            yield ValueError("no name was set for the tag")
+            raise ValueError("no name was set for the tag")
         yield self.name # always yield an element name
         if self.classes:
             yield f"class={enclose_double_quote(' '.join(self.classes))}"
@@ -122,7 +122,7 @@ class HTMLElement:
 
     def to_tag_end(self) -> str:
         if not self.name:
-            yield ValueError("no name was set for the tag")
+            raise ValueError("no name was set for the tag")
         """Returns the end tag of the HTML element"""
         return f"</{self.name}>"
 
