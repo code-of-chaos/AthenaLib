@@ -5,7 +5,9 @@
 from __future__ import annotations
 
 # Custom Library
-from AthenaLib.models import *
+from AthenaLib.models.vectors import Vector1D
+from AthenaLib.models.vectors import Vector2D
+from AthenaLib.models.vectors import Vector3D
 
 # Custom Packages
 from Tests.test_structure import TestStructure
