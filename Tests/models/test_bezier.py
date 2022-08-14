@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 # Custom Library
-from AthenaLib.models import *
+from AthenaLib.models.bezier import CubicBezier
 
 # Custom Packages
 from Tests.test_structure import TestStructure

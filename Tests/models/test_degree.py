@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 # Custom Library
-from AthenaLib.models import *
+from AthenaLib.models.degree import Degree
 
 # Custom Packages
 from Tests.test_structure import TestStructure

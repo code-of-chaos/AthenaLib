@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 # Custom Library
-from AthenaLib.functions import *
+from AthenaLib.functions import class_from_method
 
 # Custom Packages
 from Tests.test_structure import TestStructure
