@@ -14,3 +14,4 @@ import os
 # ----------------------------------------------------------------------------------------------------------------------
 PATHLIKE = str|bytes|os.PathLike
 NUMBER = float|int
+POINT = tuple[NUMBER, NUMBER] | list[NUMBER, NUMBER]
