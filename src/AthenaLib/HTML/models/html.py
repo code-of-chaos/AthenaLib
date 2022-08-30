@@ -4,7 +4,6 @@
 # General Packages
 from __future__ import annotations
 import copy
-from dataclasses import dataclass
 from typing import Any
 
 # Custom Library
@@ -12,6 +11,7 @@ from typing import Any
 # Custom Packages
 from AthenaLib.functions.string import enclose_double_quote
 from AthenaLib.functions.type_check import type_check_error
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -

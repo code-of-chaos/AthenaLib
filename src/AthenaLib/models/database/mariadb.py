@@ -5,11 +5,12 @@
 from __future__ import annotations
 import aiomysql
 import asyncio
-from dataclasses import dataclass, field
+from dataclasses import field
 
 # Custom Library
 
 # Custom Packages
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -

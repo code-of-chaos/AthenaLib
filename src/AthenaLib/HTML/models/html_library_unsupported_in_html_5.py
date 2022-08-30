@@ -3,13 +3,13 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-from dataclasses import dataclass
 
 # Custom Library
 
 # Custom Packages
 from AthenaLib.HTML.models.html import HTMLElement
 from AthenaLib.functions.type_check import type_check_error
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -

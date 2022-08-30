@@ -3,11 +3,11 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-from dataclasses import dataclass
 
 # Custom Library
 
 # Custom Packages
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -

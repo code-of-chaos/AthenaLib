@@ -4,7 +4,6 @@
 # General Packages
 from __future__ import annotations
 from typing import Any
-from dataclasses import dataclass
 
 # Custom Library
 from AthenaColor import HEX, RGB, RGBA
@@ -13,6 +12,7 @@ from AthenaColor import HEX, RGB, RGBA
 from AthenaLib.HTML.models.html import HTMLElement
 from AthenaLib.HTML.data.css_selection_type import CSSSelectionType
 from AthenaLib.data.text import NEW_LINE,NOTHING
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -

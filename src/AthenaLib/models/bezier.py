@@ -3,12 +3,12 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-from dataclasses import dataclass
 
 # Custom Library
 
 # Custom Packages
 import AthenaLib.functions.dunder_math as dunder_math
+from AthenaLib.decorators.dataclass import dataclass
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
