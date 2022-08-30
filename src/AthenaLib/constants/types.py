@@ -3,6 +3,8 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
+import os
+import typing
 
 # Custom Library
 
@@ -11,10 +13,8 @@ from __future__ import annotations
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def slice_into_steps(source:str, step:int):
-    for s in (source[i::step] for i in range(step)):
-        yield s
+PATHLIKE = str|bytes|os.PathLike
+NUMBER = float|int
+POINT = tuple[NUMBER, NUMBER] | list[NUMBER, NUMBER]
 
-def slice_into_equal_lengths(source:str, length:int):
-    for i in range(0, len(source), length):
-        yield source[i:i+length]
+_T = typing.TypeVar('_T') # needed for dataclass
