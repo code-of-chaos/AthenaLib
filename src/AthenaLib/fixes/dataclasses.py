@@ -13,7 +13,17 @@ import typing
 from AthenaLib.constants.types import _T
 
 # ----------------------------------------------------------------------------------------------------------------------
-# - Code -
+# - Parts of dataclasses that don't need fixes -
+# ----------------------------------------------------------------------------------------------------------------------
+field = dataclasses.field
+Field = dataclasses.Field
+FrozenInstanceError = dataclasses.FrozenInstanceError
+InitVar = dataclasses.InitVar
+KW_ONLY = dataclasses.KW_ONLY
+MISSING = dataclasses.MISSING
+
+# ----------------------------------------------------------------------------------------------------------------------
+# - Objects that have to be fixed -
 # ----------------------------------------------------------------------------------------------------------------------
 def dataclass(**kwargs) -> typing.Callable[[typing.Type[_T]], typing.Type[_T]]:
     """
