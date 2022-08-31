@@ -11,10 +11,3 @@ from __future__ import annotations
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-def slice_into_steps(source:str, step:int):
-    for s in (source[i::step] for i in range(step)):
-        yield s
-
-def slice_into_equal_lengths(source:str, length:int):
-    for i in range(0, len(source), length):
-        yield source[i:i+length]

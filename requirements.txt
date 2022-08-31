@@ -1,2 +1,1 @@
 AthenaColor~=6.0.1
-aiomysql ~= 0.1.1
