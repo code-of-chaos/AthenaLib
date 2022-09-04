@@ -10,9 +10,9 @@ from typing import Callable
 # Custom Library
 
 # Custom Packages
-from AthenaColor.models.color_system import ColorSystem, RGBA
-from AthenaColor.func.color_object_conversion import to_RGBA
-from AthenaColor.func.color_tuple_conversion import normalize_rgba
+from AthenaLib.colors.models.color_system import ColorSystem, RGBA
+from AthenaLib.colors.functions.color_object_conversion import to_RGBA
+from AthenaLib.colors.functions.color_tuple_conversion import normalize_rgba
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -

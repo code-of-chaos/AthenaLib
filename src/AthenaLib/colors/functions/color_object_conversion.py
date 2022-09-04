@@ -7,8 +7,8 @@ from __future__ import annotations
 # Custom Library
 
 # Custom Packages
-from AthenaColor.func.color_tuple_conversion import rgb_to_hex, rgba_to_hexa
-from AthenaColor.models.color_system import ColorSystem,RGB,HEX,CMYK,HSL,HSV,RGBA,HEXA, color_conversions_mapped
+from AthenaLib.colors.functions.color_tuple_conversion import rgb_to_hex, rgba_to_hexa
+from AthenaLib.colors.models.color_system import ColorSystem,RGB,HEX,CMYK,HSL,HSV,RGBA,HEXA, color_conversions_mapped
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -
