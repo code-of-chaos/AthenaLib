@@ -21,3 +21,5 @@ CV_INT = typing.ClassVar[int]
 CV_COLOR = typing.ClassVar[COLOR]
 
 _T = typing.TypeVar('_T') # needed for dataclass
+
+CV_UNDEFINED = typing.ClassVar[typing.Any]
