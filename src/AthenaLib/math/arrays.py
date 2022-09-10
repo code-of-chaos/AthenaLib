@@ -45,3 +45,9 @@ def calculate_center(points:ArrayLike) -> ArrayLike:
         points[:, 0].sum() / (length := len(points)) ,
         points[:, 1].sum() / length
     ])
+
+def calculate_nearest(center_point:ArrayLike, points:list):
+    return min(
+        points,
+        key=lambda p: math.hypot(p[0]-center_point[0], p[1]-center_point[1])
+    )
