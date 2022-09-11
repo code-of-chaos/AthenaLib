@@ -42,8 +42,8 @@ def calculate_center(points:ArrayLike) -> ArrayLike:
     Points is a Numpy Array of Numpy Arrays which describe the 2d points
     """
     return np.array([
-        points[:, 0].sum() / (length := len(points)) ,
-        points[:, 1].sum() / length
+        points[:, 0].sum() / len(points) ,
+        points[:, 1].sum() / len(points)
     ])
 
 def calculate_nearest(center_point:ArrayLike, points:list):
