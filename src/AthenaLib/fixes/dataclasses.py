@@ -19,8 +19,10 @@ field = dataclasses.field
 Field = dataclasses.Field
 FrozenInstanceError = dataclasses.FrozenInstanceError
 InitVar = dataclasses.InitVar
-KW_ONLY = dataclasses.KW_ONLY
 MISSING = dataclasses.MISSING
+
+if sys.version >= (3, 10):
+    KW_ONLY = dataclasses.KW_ONLY
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Objects that have to be fixed -
