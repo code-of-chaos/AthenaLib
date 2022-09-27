@@ -3,20 +3,14 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
+from typing import Literal
 
 # Custom Library
 
 # Custom Packages
+from AthenaLib.constants.text import GET,POST,PATCH,DELETE,PUT
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-NEW_LINE = "\n"
-NOTHING = ""
-TRUTHY = {"1", "True", "true", "TRUE", 1}
-
-GET = "GET"
-POST = "POST"
-PATCH = "PATCH"
-DELETE = "DELETE"
-PUT = "PUT"
+REQUEST_METHODS = Literal[GET,POST,PATCH,DELETE,PUT]
