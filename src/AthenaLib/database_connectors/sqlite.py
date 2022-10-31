@@ -38,7 +38,8 @@ class ConnectorSqlite3:
             the executed commands within the connection will be committed,
             else rolled back.
         """
-        with contextlib.closing(sqlite3.connect(self.path, isolation_level="DEFERRED")) as conn:
+        isolation_level = None if commit else "DEFERRED"
+        with contextlib.closing(sqlite3.connect(self.path, isolation_level=isolation_level)) as conn:
             try:
                 yield conn
             except sqlite3.Error:
