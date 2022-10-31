@@ -3,24 +3,25 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-import os
-import typing
-import pathlib
+import json
+import dataclasses
 
 # Custom Library
+from AthenaLib.constants.types import PATHLIKE
 
 # Custom Packages
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-PATHLIKE = str|bytes|os.PathLike|pathlib.Path
-NUMBER = float|int
-POINT = tuple[NUMBER, NUMBER] | list[NUMBER, NUMBER]
-COLOR = tuple[NUMBER,NUMBER,NUMBER] | tuple[NUMBER,NUMBER,NUMBER,NUMBER]
-CV_INT = typing.ClassVar[int]
-CV_COLOR = typing.ClassVar[COLOR]
+def load_jsonfile(filepath:PATHLIKE) -> dict:
+    with open(filepath, "r") as file:
+        return json.load(file)
 
-_T = typing.TypeVar('_T') # needed for dataclass
-
-CV_UNDEFINED = typing.ClassVar[typing.Any]
+def dump_dataclass_to_jsonfile(obj:dataclasses.dataclass, filepath:PATHLIKE, **json_kwargs):
+    with open(filepath, "w+") as file:
+        json.dump(
+            obj=dataclasses.asdict(obj),
+            fp=file,
+            **json_kwargs
+        )

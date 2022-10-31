@@ -14,3 +14,9 @@ from __future__ import annotations
 NEW_LINE = "\n"
 NOTHING = ""
 TRUTHY = {"1", "True", "true", "TRUE", 1}
+
+GET = "GET"
+POST = "POST"
+PATCH = "PATCH"
+DELETE = "DELETE"
+PUT = "PUT"
