@@ -29,12 +29,16 @@ class DotEnv:
     ---
     - filepath: PATHLIKE ; The file to parse
     - auto_run: bool ; When True, the init function will automatically parse the env file and populate `os.environ`
+    - overwrite: bool ; When True, the parser won't check if the name is already present in `os.environ` and overwrite
+                        if the name is already present
     """
     filepath: pathlib.Path
+    overwrite:bool
 
-    __slots__ = ("filepath",)
+    __slots__ = ("filepath","overwrite")
 
-    def __init__(self, filepath:PATHLIKE, *, auto_run:bool=False) -> None:
+    def __init__(self, filepath:PATHLIKE, *, auto_run:bool=False, overwrite:bool=False) -> None:
+        self.overwrite = overwrite
         self.filepath = pathlib.Path(filepath)
         if not self.filepath.exists() or not self.filepath.is_file():
             raise FileNotFoundError(self.filepath)
@@ -51,7 +55,7 @@ class DotEnv:
         # need to have populated the self.vars with some data,
         #   else no vars could be added to environ
         for name, value in self._parse_generator():
-            if name in os.environ:
+            if name in os.environ and not self.overwrite:
                 raise ValueError(f"Duplicate environment variable name of '{name}'")
 
             # set them to environment
