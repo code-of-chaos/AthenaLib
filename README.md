@@ -1,18 +1,17 @@
 # - AthenaLib -
-[![pypi](https://img.shields.io/pypi/v/AthenaLib)](https://pypi.org/project/AthenaLib/) [![GitHub license](https://img.shields.io/github/license/DirectiveAthena/AthenaLib)](https://github.com/DirectiveAthena/VerSC-AthenaColor/blob/master/LICENSE) [![Discord](https://img.shields.io/discord/814599159926620160?color=maroon)](https://discord.gg/6JcDbhXkCH) [![Downloads](https://pepy.tech/badge/athenalib)](https://pepy.tech/project/athenalib)
+[![pypi](https://img.shields.io/pypi/v/AthenaLib)](https://pypi.org/project/AthenaLib/) [![GitHub license](https://img.shields.io/github/license/Athena-Chaos-Driven-Code/AthenaLib)](https://github.com/Athena-Chaos-Driven-Code/VerSC-AthenaColor/blob/master/LICENSE) [![Discord](https://img.shields.io/discord/814599159926620160?color=maroon)](https://discord.gg/6JcDbhXkCH) [![Downloads](https://pepy.tech/badge/athenalib)](https://pepy.tech/project/athenalib)
 
 
 
 --- 
 ## Package Details
 #### Details and features 
-- A library of Python modules for Directive Athena related Packages
+- A library of Python modules for [Athena's Chaos Driven Code](https://github.com/Athena-Chaos-Driven-Code) related Packages
 - Used as a dependency on most, if not all, "*Athena...*" packages
-  - An exception to this rule is [AthenaColor](https://github.com/DirectiveAthena/AthenaColor) as this package is "dependency-less"
 
 #### Python Version
-- Supported Python versions: **3.10**
-  - Other older versions of Python are not gonna be supported. 
+- Supported Python versions: **3.11**
+  - Other older versions of Python are not going to be supported. 
 
 ---
 ## Documentation
@@ -32,7 +31,7 @@ pip install AthenaLib --upgrade
 
 ## Links 
 Project files can be found at:    
-- [GitHub Repo](https://github.com/DirectiveAthena/AthenaLib)     
+- [GitHub Repo](https://github.com/Athena-Chaos-Driven-Code/AthenaLib)     
 - [Pypi link](https://pypi.org/project/AthenaLib/)    
 
 ---
