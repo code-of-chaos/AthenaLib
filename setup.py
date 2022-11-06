@@ -15,7 +15,7 @@ def readme_handler() -> str:
 
 def version_handler() -> str:
     # ------------------------------------------------------------------------------------------------------------------
-    version = 2,0,0 # <-- DEFINE THE VERSION IN A TUPLE FORMAT HERE
+    version = 2,1,0 # <-- DEFINE THE VERSION IN A TUPLE FORMAT HERE
     # ------------------------------------------------------------------------------------------------------------------
     return ".".join(str(i) for i in version)
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         license="GPLv3",
         package_dir={"": "src"},
         packages=setuptools.find_packages(where="src"),
-        python_requires=">=3.10",
+        python_requires=">=3.11",
         install_requires=[
             "numpy>=1.23.4"
         ]
