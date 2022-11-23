@@ -33,9 +33,9 @@ class AthenaSqliteLogger(AthenaLogger):
     # noinspection SqlNoDataSourceInspection
     SQL_CREATE_TABLES: list[str] = [
         f"""
-        CREATE TABLE IF NOT EXISTS `logger`  (
+        CREATE TABLE IF NOT EXISTS `logger` (
             `id` INTEGER PRIMARY KEY,
-            `time` TIMESTAMP NOT NULL DEFAULT NOW(),
+            `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
             `lvl` TEXT NOT NULL,
             `section` TEXT,
             `txt` TEXT
@@ -73,25 +73,29 @@ class AthenaSqliteLogger(AthenaLogger):
     # ------------------------------------------------------------------------------------------------------------------
     # - Logger functions that write to the database -
     # ------------------------------------------------------------------------------------------------------------------
-    async def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str):
+    async def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str|None):
         with self.if_enabled():
+            # If text is None, cast to None
+            #   If this sin't done, will raise an error
+            txt = "Null" if text is None else f"'{sanitize_sql(text)}'"
+
             async with self._db_connect() as db:
                 # noinspection SqlNoDataSourceInspection,SqlResolve
                 await db.execute(f"""
                     INSERT INTO logger (lvl, section, txt)
-                    VALUES ('{sanitize_sql(level)}', '{sanitize_sql(section)}', '{sanitize_sql(text)}');
+                    VALUES ('{sanitize_sql(level)}', '{sanitize_sql(section)}', {txt});
                 """)
 
-    async def log_print(self, section:str|enum.StrEnum, text:str):
+    async def log_print(self, section:str|enum.StrEnum, text:str|None=None):
         print(text)
         await self.log(level=LoggerLevels.PRINT, section=section, text=text)
 
-    async def log_debug(self, section:str|enum.StrEnum, text:str):
+    async def log_debug(self, section:str|enum.StrEnum, text:str|None=None):
         await self.log(level=LoggerLevels.DEBUG, section=section, text=text)
 
-    async def log_warning(self, section:str|enum.StrEnum, text:str):
+    async def log_warning(self, section:str|enum.StrEnum, text:str|None=None):
         await self.log(level=LoggerLevels.WARN, section=section, text=text)
 
-    async def log_error(self, section:str|enum.StrEnum, text:str):
+    async def log_error(self, section:str|enum.StrEnum, text:str|None=None):
         await self.log(level=LoggerLevels.ERROR, section=section, text=text)
 
