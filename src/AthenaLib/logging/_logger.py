@@ -28,6 +28,10 @@ class LoggerLevels(enum.StrEnum):
 # ----------------------------------------------------------------------------------------------------------------------
 class AthenaLogger(ABC):
     _pool_executor:concurrent.futures.ProcessPoolExecutor
+    enable_track:bool
+    enable_debug:bool
+    enable_warning:bool
+    enable_error:bool
 
     # ------------------------------------------------------------------------------------------------------------------
     # - Abstract Features that need to be implemented -
@@ -41,25 +45,29 @@ class AthenaLogger(ABC):
         Simple log command that is meant for data that needs to be tracked while in development mode.
         Should be disabled once sufficient data has been gathered throughout development
         """
-        self.log(level=LoggerLevels.TRACK, section=section, text=text)
+        if self.enable_track:
+            self.log(level=LoggerLevels.TRACK, section=section, text=text)
 
     def log_debug(self, section:str|enum.StrEnum, text:str|None=None):
         """
         Simple log command for debug data
         """
-        self.log(level=LoggerLevels.DEBUG, section=section, text=text)
+        if self.enable_debug:
+            self.log(level=LoggerLevels.DEBUG, section=section, text=text)
 
     def log_warning(self, section:str|enum.StrEnum, text:str|None=None):
         """
         Simple log command for Warnings
         """
-        self.log(level=LoggerLevels.WARN, section=section, text=text)
+        if self.enable_warning:
+            self.log(level=LoggerLevels.WARN, section=section, text=text)
 
     def log_error(self, section:str|enum.StrEnum, text:str|None=None):
         """
         Simple log command for Errors
         """
-        self.log(level=LoggerLevels.ERROR, section=section, text=text)
+        if self.enable_error:
+            self.log(level=LoggerLevels.ERROR, section=section, text=text)
 
 
 

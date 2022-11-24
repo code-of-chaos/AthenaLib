@@ -6,6 +6,7 @@ from __future__ import annotations
 import pathlib
 import enum
 import concurrent.futures
+from dataclasses import dataclass, field
 
 # Athena Packages
 
@@ -15,20 +16,25 @@ from AthenaLib.logging._logger import AthenaLogger, LoggerLevels
 import AthenaLib.logging.logger_sqlite_functions as LSF
 
 # ----------------------------------------------------------------------------------------------------------------------
+# - Support Code -
+# ----------------------------------------------------------------------------------------------------------------------
+CF_PPE = concurrent.futures.ProcessPoolExecutor
+
+# ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
+@dataclass(slots=True)
 class AthenaSqliteLogger(AthenaLogger):
     sqlite_path:pathlib.Path
     table_to_use:str
 
-    def __init__(self, sqlite_path:PATHLIKE, table_to_use:str):
-        self.sqlite_path = pathlib.Path(sqlite_path)
-        self.table_to_use = table_to_use
+    enable_track: bool = True
+    enable_debug: bool = True
+    enable_warning: bool = True
+    enable_error: bool = True
 
-        # noinspection SqlNoDataSourceInspection
-        self._pool_executor = concurrent.futures.ProcessPoolExecutor(
-            max_workers=1,
-        )
+    # non init
+    _pool_executor: CF_PPE = field(init=False, default_factory=lambda:CF_PPE(max_workers=1))
 
     # ------------------------------------------------------------------------------------------------------------------
     # - Logger functions that write to the database -
@@ -41,7 +47,7 @@ class AthenaSqliteLogger(AthenaLogger):
             LSF.create_tables,
             sqlite_path=self.sqlite_path,
             queries=[
-                f"""
+                f"""# noinspection SqlNoDataSourceInspectionForFile
                 CREATE TABLE IF NOT EXISTS `{self.table_to_use}` (
                     `id` INTEGER PRIMARY KEY,
                     `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
