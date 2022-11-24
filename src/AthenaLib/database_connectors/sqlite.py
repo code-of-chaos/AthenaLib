@@ -5,7 +5,7 @@
 from __future__ import annotations
 import contextlib
 import sqlite3
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 # Custom Library
 from AthenaLib.constants.types import PATHLIKE
