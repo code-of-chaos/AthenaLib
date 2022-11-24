@@ -11,12 +11,12 @@ from __future__ import annotations
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-NEW_LINE = "\n"
-NOTHING = ""
-TRUTHY = {"1", "True", "true", "TRUE", 1}
+NEW_LINE:str = "\n"
+NOTHING:str = ""
+TRUTHY:set[str|int|bool] = {"1", "True", "true", "TRUE", 1}
 
-GET = "GET"
-POST = "POST"
-PATCH = "PATCH"
-DELETE = "DELETE"
-PUT = "PUT"
+GET:str = "GET"
+POST:str = "POST"
+PATCH:str = "PATCH"
+DELETE:str = "DELETE"
+PUT:str = "PUT"
