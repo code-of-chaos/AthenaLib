@@ -21,28 +21,13 @@ class AthenaSqliteLogger(AthenaLogger):
     sqlite_path:pathlib.Path
     table_to_use:str
 
-    def __init__(self, sqlite_path:PATHLIKE = "data/logger.sqlite", table_to_use:str = None):
+    def __init__(self, sqlite_path:PATHLIKE, table_to_use:str):
         self.sqlite_path = pathlib.Path(sqlite_path)
         self.table_to_use = table_to_use
 
         # noinspection SqlNoDataSourceInspection
         self._pool_executor = concurrent.futures.ProcessPoolExecutor(
             max_workers=1,
-            initializer=LSF.create_tables,
-            initargs=(
-                self.sqlite_path,
-                [
-                    f"""
-                    CREATE TABLE IF NOT EXISTS `{table_to_use}` (
-                        `id` INTEGER PRIMARY KEY,
-                        `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                        `lvl` TEXT NOT NULL,
-                        `section` TEXT,
-                        `txt` TEXT
-                    );
-                    """,
-                ]
-            )
         )
 
     # ------------------------------------------------------------------------------------------------------------------
@@ -50,6 +35,23 @@ class AthenaSqliteLogger(AthenaLogger):
     # ------------------------------------------------------------------------------------------------------------------
     def shutdown(self):
         self._pool_executor.shutdown()
+
+    def create_tables(self):
+        self._pool_executor.submit(
+            LSF.create_tables,
+            sqlite_path=self.sqlite_path,
+            queries=[
+                f"""
+                CREATE TABLE IF NOT EXISTS `{self.table_to_use}` (
+                    `id` INTEGER PRIMARY KEY,
+                    `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                    `lvl` TEXT NOT NULL,
+                    `section` TEXT,
+                    `txt` TEXT
+                );
+                """,
+            ]
+        )
 
     def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str|None):
         self._pool_executor.submit(
