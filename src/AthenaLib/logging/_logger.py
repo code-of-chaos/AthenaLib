@@ -4,9 +4,8 @@
 # General Packages
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from typing import ClassVar
 import enum
-import contextlib
+import concurrent.futures
 
 # Athena Packages
 
@@ -18,46 +17,32 @@ import contextlib
 error_type = lambda obj: f"the following did not inherit from expected AthenaLoggerType: {obj}"
 error_logger = lambda obj: f"the following did not inherit from expected AthenaLogger: {obj}"
 
+class LoggerLevels(enum.StrEnum):
+    DEBUG = enum.auto()
+    WARN = enum.auto()
+    ERROR = enum.auto()
+
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
 class AthenaLogger(ABC):
-    _loggers:ClassVar[dict[enum.StrEnum: AthenaLogger]] = {}
-    enabled:bool
+    _pool_executor:concurrent.futures.ProcessPoolExecutor
 
     # ------------------------------------------------------------------------------------------------------------------
-    # - Features already able to be defined by AthenaLogger -
-    # ------------------------------------------------------------------------------------------------------------------
-    @classmethod
-    def get_logger(cls, logger_type:enum.StrEnum):
-        return cls._loggers[logger_type]
-
-    @classmethod
-    def set_logger(cls, logger_type:enum.StrEnum, logger:AthenaLogger):
-        # Given loggers are defined in development mode,
-        #   Don't need to check for this in production mode
-        assert isinstance(logger, AthenaLogger), error_logger(logger)
-        # ---
-
-        cls._loggers[logger_type] = logger
-
-    @contextlib.contextmanager
-    def if_enabled(self):
-        if self.enabled:
-            yield None
-
-    # ------------------------------------------------------------------------------------------------------------------
-    # - Abstract Features that need to be implmented -
+    # - Abstract Features that need to be implemented -
     # ------------------------------------------------------------------------------------------------------------------
     @abstractmethod
-    def __init__(self, *args, **kwargs):
+    def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str|None):
         pass
 
-    @abstractmethod
-    async def _db_connect(self):
-        """
-        Async Context manager to easily connect to the database
-        Commits all changes to the db, before closing the connection
-        """
+    def log_debug(self, section:str|enum.StrEnum, text:str|None=None):
+        self.log(level=LoggerLevels.DEBUG, section=section, text=text)
+
+    def log_warning(self, section:str|enum.StrEnum, text:str|None=None):
+        self.log(level=LoggerLevels.WARN, section=section, text=text)
+
+    def log_error(self, section:str|enum.StrEnum, text:str|None=None):
+        self.log(level=LoggerLevels.ERROR, section=section, text=text)
+
 
 
