@@ -38,7 +38,6 @@ if __name__ == '__main__':
         packages=setuptools.find_packages(where="src"),
         python_requires=">=3.11",
         install_requires=[
-            "numpy>=1.23.4",
-            "aiosqlite>=0.17.0"
+            "numpy>=1.23.4"
         ]
     )

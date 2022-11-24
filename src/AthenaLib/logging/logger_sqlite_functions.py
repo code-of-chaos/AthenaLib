@@ -37,7 +37,7 @@ def create_tables(sqlite_path:pathlib.Path, queries:list[str]):
         for sql in queries:
             db.execute(sql)
 
-def execute_log(sqlite_path:pathlib.Path, level:LoggerLevels, section:str|enum.StrEnum, text:str|None,*, commit: bool = True):
+def execute_log(sqlite_path:pathlib.Path, level:LoggerLevels, section:str|enum.StrEnum, text:str|None, table_to_use:str, commit: bool = True):
     with _db_connect(sqlite_path, commit=commit) as db:
         # If text is None, cast to None
         #   If this isn't done, will raise an error
@@ -45,6 +45,6 @@ def execute_log(sqlite_path:pathlib.Path, level:LoggerLevels, section:str|enum.S
 
         # noinspection SqlNoDataSourceInspection,SqlResolve
         db.execute(f"""
-        INSERT INTO logger (lvl, section, txt)
+        INSERT INTO {table_to_use} (lvl, section, txt)
         VALUES ('{sanitize_sql(level)}', '{sanitize_sql(section)}', {txt});
         """)

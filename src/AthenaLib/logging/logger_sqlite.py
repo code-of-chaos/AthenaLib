@@ -3,10 +3,8 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
-import contextlib
 import pathlib
 import enum
-import sqlite3
 import concurrent.futures
 
 # Athena Packages
@@ -15,35 +13,35 @@ import concurrent.futures
 from AthenaLib.constants.types import PATHLIKE
 from AthenaLib.logging._logger import AthenaLogger, LoggerLevels
 import AthenaLib.logging.logger_sqlite_functions as LSF
-from AthenaLib.general.if_functions import default_or_optional
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-SQL_CREATE_TABLES_DEFAULT = [
-    f"""
-    CREATE TABLE IF NOT EXISTS `logger` (
-        `id` INTEGER PRIMARY KEY,
-        `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        `lvl` TEXT NOT NULL,
-        `section` TEXT,
-        `txt` TEXT
-    );
-    """,
-]
-
 class AthenaSqliteLogger(AthenaLogger):
     sqlite_path:pathlib.Path
+    table_to_use:str
 
-    def __init__(self, sqlite_path:PATHLIKE = "data/logger.sqlite", sql_create_tables:list[str] = None):
+    def __init__(self, sqlite_path:PATHLIKE = "data/logger.sqlite", table_to_use:str = None):
         self.sqlite_path = pathlib.Path(sqlite_path)
+        self.table_to_use = table_to_use
 
+        # noinspection SqlNoDataSourceInspection
         self._pool_executor = concurrent.futures.ProcessPoolExecutor(
             max_workers=1,
             initializer=LSF.create_tables,
             initargs=(
                 self.sqlite_path,
-                default_or_optional(SQL_CREATE_TABLES_DEFAULT, sql_create_tables)
+                [
+                    f"""
+                    CREATE TABLE IF NOT EXISTS `{table_to_use}` (
+                        `id` INTEGER PRIMARY KEY,
+                        `time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                        `lvl` TEXT NOT NULL,
+                        `section` TEXT,
+                        `txt` TEXT
+                    );
+                    """,
+                ]
             )
         )
 
@@ -60,5 +58,6 @@ class AthenaSqliteLogger(AthenaLogger):
             level=level,
             section=section,
             text=text,
+            table_to_use=self.table_to_use,
             commit=True
         )
