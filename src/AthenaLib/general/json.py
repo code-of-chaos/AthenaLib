@@ -3,8 +3,11 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # General Packages
 from __future__ import annotations
+
+import datetime
 import json
 import dataclasses
+from typing import Any
 
 # Custom Library
 from AthenaLib.constants.types import PATHLIKE
@@ -25,3 +28,15 @@ def dump_dataclass_to_jsonfile(obj:dataclasses.dataclass, filepath:PATHLIKE, **j
             fp=file,
             **json_kwargs
         )
+
+class GeneralCustomJsonEncoder(json.JSONEncoder):
+    """
+    Encodes objects like datetime.datetime(), ...
+    """
+    def default(self, o) -> str|int|bool|dict|list:
+        match o:
+            case datetime.datetime():
+                return o.isoformat()
+
+            case _:
+                return super(GeneralCustomJsonEncoder, self).default(o)
