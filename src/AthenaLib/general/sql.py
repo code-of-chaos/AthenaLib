@@ -4,10 +4,15 @@
 # General Packages
 from __future__ import annotations
 
-# Custom Library
+# Athena Packages
 
-# Custom Packages
+# Local Imports
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
+def sanitize_sql(txt:str) -> str:
+    """
+    Simple function to sanitize the sql input
+    """
+    return txt.replace("'", "''")
