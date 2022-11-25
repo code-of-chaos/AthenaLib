@@ -6,6 +6,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 import enum
 import concurrent.futures
+from dataclasses import dataclass, field
+from typing import Callable
 
 # Athena Packages
 
@@ -26,12 +28,26 @@ class LoggerLevels(enum.StrEnum):
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
+@dataclass(slots=True)
 class AthenaLogger(ABC):
-    _pool_executor:concurrent.futures.ProcessPoolExecutor
-    enable_track:bool
-    enable_debug:bool
-    enable_warning:bool
-    enable_error:bool
+    enable_track:bool = True
+    enable_debug:bool = True
+    enable_warning:bool = True
+    enable_error:bool = True
+
+    _pool_executor: concurrent.futures.ProcessPoolExecutor = field(init=False, default_factory=lambda:concurrent.futures.ProcessPoolExecutor(max_workers=1))
+    _logger_entered:bool = field(init=False, default=False)
+    _buffer:list[tuple[LoggerLevels, str|enum.StrEnum, str|None]] = field(init=False, default_factory=list)
+
+    def __enter__(self):
+        self._logger_entered = True
+        for level, section, text in self._buffer:
+            self.log(level, section, text)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # Makes sure the pool executor is shot down,
+        #   else the process will keep to exist and errors might occur
+        self._pool_executor.shutdown()
 
     # ------------------------------------------------------------------------------------------------------------------
     # - Abstract Features that need to be implemented -
