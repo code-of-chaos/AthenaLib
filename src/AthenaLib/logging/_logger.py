@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 import enum
 import concurrent.futures
 from dataclasses import dataclass, field
-from typing import Callable
+from typing import Callable, Any
 
 # Athena Packages
 
@@ -53,37 +53,37 @@ class AthenaLogger(ABC):
     # - Abstract Features that need to be implemented -
     # ------------------------------------------------------------------------------------------------------------------
     @abstractmethod
-    def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str|None):
+    def log(self, level:LoggerLevels, section:str|enum.StrEnum, data:Any|None):
         pass
 
-    def log_track(self, section:str|enum.StrEnum, text:str|None=None):
+    def log_track(self, section:str|enum.StrEnum, data:Any|None=None):
         """
         Simple log command that is meant for data that needs to be tracked while in development mode.
         Should be disabled once sufficient data has been gathered throughout development
         """
         if self.enable_track:
-            self.log(level=LoggerLevels.TRACK, section=section, text=text)
+            self.log(level=LoggerLevels.TRACK, section=section, data=data)
 
-    def log_debug(self, section:str|enum.StrEnum, text:str|None=None):
+    def log_debug(self, section:str|enum.StrEnum, data:Any|None=None):
         """
         Simple log command for debug data
         """
         if self.enable_debug:
-            self.log(level=LoggerLevels.DEBUG, section=section, text=text)
+            self.log(level=LoggerLevels.DEBUG, section=section, data=data)
 
-    def log_warning(self, section:str|enum.StrEnum, text:str|None=None):
+    def log_warning(self, section:str|enum.StrEnum, data:Any|None=None):
         """
         Simple log command for Warnings
         """
         if self.enable_warning:
-            self.log(level=LoggerLevels.WARN, section=section, text=text)
+            self.log(level=LoggerLevels.WARN, section=section, data=data)
 
-    def log_error(self, section:str|enum.StrEnum, text:str|None=None):
+    def log_error(self, section:str|enum.StrEnum, data:Any|None=None):
         """
         Simple log command for Errors
         """
         if self.enable_error:
-            self.log(level=LoggerLevels.ERROR, section=section, text=text)
+            self.log(level=LoggerLevels.ERROR, section=section, data=data)
 
 
 

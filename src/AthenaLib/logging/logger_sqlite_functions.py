@@ -7,12 +7,15 @@ import contextlib
 import pathlib
 import enum
 import sqlite3
+from typing import Any
 
 # Athena Packages
 
 # Local Imports
 from AthenaLib.logging._logger import LoggerLevels
 from AthenaLib.general.sql import sanitize_sql
+from AthenaLib.general.casting import cast_to_string
+
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
@@ -48,11 +51,11 @@ def db_create(path:pathlib.Path, queries:str):
         for sql in queries:
             db.executescript(sql)
 
-def execute_log(path:pathlib.Path, level:LoggerLevels, section:str|enum.StrEnum, text:str|None, table_to_use:str, commit: bool = True):
+def execute_log(path:pathlib.Path, level:LoggerLevels, section:str|enum.StrEnum, data:Any|None, table_to_use:str, commit: bool = True):
     with connect(path, commit=commit) as db:
         # If text is None, cast to None
         #   If this isn't done, will raise an error
-        txt = "Null" if text is None else f"'{sanitize_sql(text)}'"
+        txt = "Null" if data is None else f"'{sanitize_sql(cast_to_string(data))}'"
 
         # noinspection SqlNoDataSourceInspection,SqlResolve
         db.execute(f"""

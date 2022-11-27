@@ -51,11 +51,11 @@ class AthenaSqliteLogger(AthenaLogger):
     # ------------------------------------------------------------------------------------------------------------------
     # - Logger functions that write to the database -
     # ------------------------------------------------------------------------------------------------------------------
-    def log(self, level:LoggerLevels, section:str|enum.StrEnum, text:str|None):
+    def log(self, level: LoggerLevels, section: str | enum.StrEnum, data: str | None):
         # If the logger itself hasn't been entered yet,
         #   Store the log to the buffer, and execute at a later date
         if not self._logger_entered:
-            self._buffer.append((level, section, text))
+            self._buffer.append((level, section, data))
             return
 
         # Let the pool execute the call to the database
@@ -64,7 +64,7 @@ class AthenaSqliteLogger(AthenaLogger):
             path=self.sqlite_path,
             level=level,
             section=section,
-            text=text,
+            data=data,
             table_to_use=self.table_to_use,
             commit=True
         )
