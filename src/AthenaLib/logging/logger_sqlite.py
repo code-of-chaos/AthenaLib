@@ -23,14 +23,14 @@ class AthenaSqliteLogger(AthenaLogger):
     table_to_use:str = "logging"
     cast_to_str:Callable = str
 
-    def __post_init__(self):
-        if not self.sqlite_path.exists():
-            raise FileNotFoundError(self.sqlite_path)
-
     # ------------------------------------------------------------------------------------------------------------------
     # - Context manager for ease of use -
     # ------------------------------------------------------------------------------------------------------------------
     def __enter__(self):
+        # Check if the file exsists
+        if not self.sqlite_path.exists():
+            raise FileNotFoundError(self.sqlite_path)
+
         # Makes sure the table will exist
         self._pool_executor.submit(
             LSF.db_create,
