@@ -5,13 +5,12 @@
 from __future__ import annotations
 import pathlib
 import enum
-import concurrent.futures
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+from typing import Callable
 
 # Athena Packages
 
 # Local Imports
-from AthenaLib.constants.types import PATHLIKE
 from AthenaLib.logging._logger import AthenaLogger, LoggerLevels
 import AthenaLib.logging.logger_sqlite_functions as LSF
 
@@ -22,6 +21,11 @@ import AthenaLib.logging.logger_sqlite_functions as LSF
 class AthenaSqliteLogger(AthenaLogger):
     sqlite_path:pathlib.Path = pathlib.Path("data/logger.irc")
     table_to_use:str = "logging"
+    cast_to_str:Callable = str
+
+    def __post_init__(self):
+        if not self.sqlite_path.exists():
+            raise FileNotFoundError(self.sqlite_path)
 
     # ------------------------------------------------------------------------------------------------------------------
     # - Context manager for ease of use -
@@ -55,7 +59,7 @@ class AthenaSqliteLogger(AthenaLogger):
         # If the logger itself hasn't been entered yet,
         #   Store the log to the buffer, and execute at a later date
         if not self._logger_entered:
-            self._buffer.append((level, section, data))
+            self._buffer.append((level, section, self.cast_to_str(data)))
             return
 
         # Let the pool execute the call to the database
@@ -64,7 +68,7 @@ class AthenaSqliteLogger(AthenaLogger):
             path=self.sqlite_path,
             level=level,
             section=section,
-            data=data,
+            data=self.cast_to_str(data),
             table_to_use=self.table_to_use,
             commit=True
         )

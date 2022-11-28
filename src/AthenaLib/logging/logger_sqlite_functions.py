@@ -14,7 +14,6 @@ from typing import Any
 # Local Imports
 from AthenaLib.logging._logger import LoggerLevels
 from AthenaLib.general.sql import sanitize_sql
-from AthenaLib.general.casting import cast_to_string
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
@@ -55,7 +54,7 @@ def execute_log(path:pathlib.Path, level:LoggerLevels, section:str|enum.StrEnum,
     with connect(path, commit=commit) as db:
         # If text is None, cast to None
         #   If this isn't done, will raise an error
-        txt = "Null" if data is None else f"'{sanitize_sql(cast_to_string(data))}'"
+        txt = "Null" if data is None else f"'{sanitize_sql(data)}'"
 
         # noinspection SqlNoDataSourceInspection,SqlResolve
         db.execute(f"""
