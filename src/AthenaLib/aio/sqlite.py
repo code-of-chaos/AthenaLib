@@ -18,6 +18,11 @@ from dataclasses import dataclass
 # Local Imports
 
 # ----------------------------------------------------------------------------------------------------------------------
+# - Info -
+# ----------------------------------------------------------------------------------------------------------------------
+__all__ = ["AsyncSqliteConnection", "AsyncSqliteCursor"]
+
+# ----------------------------------------------------------------------------------------------------------------------
 # - Support Code -
 # ----------------------------------------------------------------------------------------------------------------------
 def set_future_result(future:asyncio.Future, result:Any) -> None:
@@ -36,7 +41,7 @@ _ConnectorCallback = Callable[[...], sqlite3.Connection]
 # ----------------------------------------------------------------------------------------------------------------------
 class AsyncSqliteConnection(threading.Thread):
     _db_connection:sqlite3.Connection|None
-    _db_connector:_ConnectorCallback
+    _db_connector_factory:_ConnectorCallback
     _queue:queue.Queue
     _chunk_size:int
 
@@ -46,7 +51,7 @@ class AsyncSqliteConnection(threading.Thread):
                  connector:_ConnectorCallback=None,
                  chunk_size:int=64
                  ):
-        self._db_connector = sqlite3.Connection(str(db_path), chunk_size) if connector is None else connector
+        self._db_connector_factory = sqlite3.Connection(str(db_path), chunk_size) if connector is None else connector
         self._db_connection = None
         self._queue = queue.Queue()
         self._chunk_size = chunk_size
@@ -126,13 +131,20 @@ class AsyncSqliteConnection(threading.Thread):
             try:
                 self._queue_put(
                     future=(future := asyncio.get_event_loop().create_future()),
-                    callback=self._db_connector
+                    callback=self._db_connector_factory
                 )
                 self._db_connection = await future
 
             except BaseException:
                 self._db_connection = None
                 raise
+    @classmethod
+    async def connect(cls, db_path:str|pathlib.Path,*,chunk_size:int=64, **kwargs) -> Self:
+        return cls(
+            db_path=db_path,
+            connector=lambda: sqlite3.connect(db_path, **kwargs),
+            chunk_size=chunk_size
+        )
 
     # ------------------------------------------------------------------------------------------------------------------
     async def close(self) -> None:

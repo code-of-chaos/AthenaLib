@@ -5,8 +5,7 @@
 from __future__ import annotations
 import contextlib
 import pathlib
-
-import aiosqlite
+import sqlite3
 from dataclasses import dataclass
 from typing import AsyncContextManager
 
@@ -14,6 +13,8 @@ from typing import AsyncContextManager
 
 # Custom Packages
 from AthenaLib.constants.types import PATHLIKE
+from AthenaLib.aio.sqlite import AsyncSqliteCursor, AsyncSqliteConnection
+import aiosqlite
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
@@ -29,20 +30,20 @@ class ConnectorAioSqlite:
         self.path = pathlib.Path(path)
 
     @contextlib.asynccontextmanager
-    async def connect(self, commit: bool = True, **kwargs) -> AsyncContextManager[aiosqlite.Connection]:
+    async def connect(self, commit: bool = True, **kwargs) -> AsyncContextManager[AsyncSqliteConnection]:
         """
         Async Context manager to easily connect to the database
         Commits all changes to the db, before closing the connection
         """
         isolation_level = None if commit else "DEFERRED"
 
-        async with aiosqlite.connect(self.path,isolation_level=isolation_level,**kwargs) as db:
-            db.row_factory = aiosqlite.Row
+        async with AsyncSqliteConnection.connect(self.path,isolation_level=isolation_level,**kwargs) as db:
+            db.row_factory = sqlite3.Row
 
             try:
                 yield db
 
-            except aiosqlite.Error:
+            except sqlite3.Error:
                 await db.rollback()
                 raise
 
