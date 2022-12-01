@@ -133,3 +133,4 @@ dmypy.json
 .pyre/
 /OutputLogs/
 /viewer_resquests/
+tests/aio/data.sqlite
