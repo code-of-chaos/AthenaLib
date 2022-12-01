@@ -17,9 +17,15 @@ from AthenaLib.aio.sqlite import AsyncSqliteCursor, AsyncSqliteConnection
 # ----------------------------------------------------------------------------------------------------------------------
 class Test_AioSqlite(unittest.IsolatedAsyncioTestCase):
 
+    # noinspection SqlNoDataSourceInspection
     async def test_Connection(self):
-        async with AsyncSqliteConnection.connect(db_path=pathlib.Path("data.sqlite")) as db: #type: AsyncSqliteConnection
-            async with db.execute("CREATE TABLE IF NOT EXISTS temp_table1( name TEXT );") as cursor: #type: AsyncSqliteCursor
-                print(await cursor.fetchall())
-            async with db.execute("SELECT * FROM sqlite_schema;") as cursor:
-                print(await cursor.fetchall())
+        connection: AsyncSqliteConnection = AsyncSqliteConnection.connect(db_path=pathlib.Path("test_connection.sqlite"))
+        async with connection:
+            cursor:AsyncSqliteCursor = await connection.cursor()
+            await cursor.execute("CREATE TABLE IF NOT EXISTS temp_table1( name TEXT );")
+            await cursor.execute("SELECT * FROM sqlite_schema;")
+
+            self.assertEqual(
+                [('table', 'temp_table1', 'temp_table1', 2, 'CREATE TABLE temp_table1( name TEXT )')],
+                await cursor.fetchall()
+            )

@@ -134,3 +134,4 @@ dmypy.json
 /OutputLogs/
 /viewer_resquests/
 tests/aio/data.sqlite
+/tests/aio/test_connection.sqlite

@@ -72,11 +72,6 @@ class AsyncSqliteConnection(threading.Thread):
 
         super().__init__()
 
-    @property
-    def _db_conn(self) -> sqlite3.Connection:
-        assert self._db_connection, "No Connection has been established yet"
-        return self._db_connection
-
     # ------------------------------------------------------------------------------------------------------------------
     # - Threading stuff -
     # ------------------------------------------------------------------------------------------------------------------
