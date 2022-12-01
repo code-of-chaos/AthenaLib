@@ -180,6 +180,13 @@ class AsyncSqliteConnection(threading.Thread):
         await self._execute(self._db_connection.commit)
 
     @async_contextmanager_or_coroutine
+    async def cursor(self) -> AsyncSqliteCursor:
+        return AsyncSqliteCursor(
+            _connection=self,
+            _cursor = await self._execute(self._db_connection.cursor)
+        )
+
+    @async_contextmanager_or_coroutine
     async def execute(self,sql:str, *extra_param:Any) -> AsyncSqliteCursor:
         return AsyncSqliteCursor(
             _connection=self,
