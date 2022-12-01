@@ -109,6 +109,8 @@ class AsyncSqliteConnection(threading.Thread):
     # - Context manager or Coroutine -
     # ------------------------------------------------------------------------------------------------------------------
     async def __aenter__(self) -> Self:
+        self._is_active = True
+        
         # Start the thread
         self.start()
 
