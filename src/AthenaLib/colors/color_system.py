@@ -8,9 +8,9 @@ from typing import Tuple
 # Custom Library
 
 # Custom Packages
-import AthenaLib.colors.functions.dunder_functions as CSD
-from AthenaLib.colors.functions.color_tuple_conversion import *
-from AthenaLib.colors.functions.constrains import constrain
+import AthenaLib.colors.dunder_functions as CSD
+from AthenaLib.colors.color_tuple_conversion import *
+from AthenaLib.colors.constrains import constrain
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - All -

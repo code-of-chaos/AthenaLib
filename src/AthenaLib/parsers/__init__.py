@@ -1,4 +1,4 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # - Package Imports | AthenaLib.parsers.dotenv -
 # ----------------------------------------------------------------------------------------------------------------------
-from AthenaLib.parsers.dot_env import DotEnv
+from AthenaLib.parsers.dot_env import AthenaDotEnv

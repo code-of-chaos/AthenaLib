@@ -8,9 +8,8 @@ from typing import Literal
 # Custom Library
 
 # Custom Packages
-from AthenaLib.constants.text import GET,POST,PATCH,DELETE,PUT
 
 # ----------------------------------------------------------------------------------------------------------------------
 # - Code -
 # ----------------------------------------------------------------------------------------------------------------------
-REQUEST_METHODS = Literal[GET,POST,PATCH,DELETE,PUT]
+REQUEST_METHODS = Literal["GET","POST","PATCH","DELETE","PUT"]

@@ -9,10 +9,10 @@ import math
 # Custom Library
 
 # Custom Packages
-from AthenaLib.colors.functions.general import (
+from AthenaLib.colors.general import (
     round_half_up
 )
-from AthenaLib.colors.functions.constrains import (
+from AthenaLib.colors.constrains import (
     constrain_hsv, constrain_hsl, constrain_rgb, constrain_cmyk, constrain_rgba
 )
 
