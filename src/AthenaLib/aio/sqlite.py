@@ -110,7 +110,7 @@ class AsyncSqliteConnection(threading.Thread):
     # ------------------------------------------------------------------------------------------------------------------
     async def __aenter__(self) -> Self:
         self._is_active = True
-        
+
         # Start the thread
         self.start()
 
